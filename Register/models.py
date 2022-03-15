@@ -28,7 +28,7 @@ class User(AbstractUser):
     
     first_name=models.CharField(max_length=255)
     last_name=models.CharField(max_length=255)
-    email=models.EmailField(unique=True)
+    email=models.EmailField('email',unique=True)
     role=models.CharField(max_length=1,choices=ROLE_CHOICES,default=ROLE_EMPLOYEE)
     phone=models.CharField(max_length=11,validators=valid_number,unique=True)
     company=models.ForeignKey(Company,on_delete=models.SET_NULL,null=True)
