@@ -1,39 +1,47 @@
-
-import email
+from enum import unique
 from pyexpat import model
-from statistics import mode
-from tkinter import CASCADE
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 
-# from django.contrib.auth.models import User
 
-# Create your models here.
+from Register.managers import CustomUserManager
 
-# class Role(models.Model):# type person in company 
-#     role_companyowner='CO'
-#     role_employee='E'
-#     role_choice=[
-#         (role_companyowner,'Company owner'),
-#         (role_employee,'Employee'),
-#     ]
-#     role=models.CharField(max_length=3,choices=role_choice,default=role_employee)
 
-# class Company(models.Model):  #company table (name)
-#     companyname=models.CharField(max_length=200) 
+class Company(models.Model):
+    company_name=models.CharField(max_length=255,primary_key=True)
+    company_biography=models.TextField()
+    
+    def __str__(self) :
+        return self.company_name
 
-# class CompanyOwner(models.Model):
-#      companyowner=models.ForeignKey(User,on_delete=models.CASCADE)
-#      role=models.ForeignKey(Role,on_delete=models.PROTECT)
-#      company=models.OneToOneField(Company,on_delete=models.CASCADE) 
 
-# class Employee(models.Model):
-#      employee=models.ForeignKey(User,on_delete=models.CASCADE)
-#      companybigrophy=models.TextField()
-#      role=models.ForeignKey(Role,on_delete=models.PROTECT)
-#      companyowner=models.ForeignKey(CompanyOwner,on_delete=models.SET_NULL,null=True)
-#      company=models.OneToOneField(Company,on_delete=models.CASCADE)
-#      def __str__(self) -> str:
-#          return self.em
+class User(AbstractUser):
+    ROLE_COMPANY_OWNER='C'
+    ROLE_EMPLOYEE='E'
+    ROLE_CHOICES=[
+        (ROLE_COMPANY_OWNER,'Company Owner'),
+        (ROLE_EMPLOYEE,'Employee'),
+    ]
+    
+    valid_number=[RegexValidator(regex='09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}')]
+    
+    first_name=models.CharField(max_length=255)
+    last_name=models.CharField(max_length=255)
+    email=models.EmailField(unique=True)
+    role=models.CharField(max_length=1,choices=ROLE_CHOICES,default=ROLE_EMPLOYEE)
+    phone=models.CharField(max_length=11,validators=valid_number,unique=True)
+    company=models.ForeignKey(Company,on_delete=models.SET_NULL,null=True)
+    USERNAME_FIELD='email'
+    REQUIRED_FIELDS = []
+    object=CustomUserManager()
+    
+    def __str__(self) :
+        return self.email
+    
+    
+    
+
 
    
         
