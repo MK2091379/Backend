@@ -3,6 +3,7 @@ from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+from django.utils.translation import gettext_lazy as _
 
 
 from Register.managers import CustomUserManager
@@ -28,10 +29,10 @@ class User(AbstractUser):
     
     first_name=models.CharField(max_length=255)
     last_name=models.CharField(max_length=255)
-    email=models.EmailField('email',unique=True)
+    email=models.EmailField(_('email address'), unique=True)
     role=models.CharField(max_length=1,choices=ROLE_CHOICES,default=ROLE_EMPLOYEE)
-    phone=models.CharField(max_length=11,validators=valid_number,unique=True)
-    company=models.ForeignKey(Company,on_delete=models.SET_NULL,null=True)
+    phone=models.CharField(max_length=11,validators=valid_number)
+    company=models.OneToOneField(Company,on_delete=models.SET_NULL,null=True)
     USERNAME_FIELD='email'
     REQUIRED_FIELDS = []
     object=CustomUserManager()
@@ -40,12 +41,4 @@ class User(AbstractUser):
         return self.email
     class Meta :
         ordering=['last_name']
-    
-    
-    
-
-
-   
-        
-    
     
