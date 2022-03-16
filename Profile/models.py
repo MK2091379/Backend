@@ -7,8 +7,7 @@ from Register.models import User,Company
 from automation import settings
 from django.core.validators import RegexValidator
 
-
-class Employee():
+class Employee(models.Model):
     sexuality_choises = [
         ("M","Male",),
         ("F","Female",),
@@ -37,5 +36,5 @@ class Employee():
     maritalـstatus = models.CharField(max_length=1,choices=maritalـstatus_choises,default="S")
     degreeـofـeducation = models.CharField(max_length=1,choices=degreeـofـeducationـchoises,default="O")
     
-class CompanyOwner():
+class CompanyOwner(Employee,models.Model):
     pass
