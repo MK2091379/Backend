@@ -33,8 +33,9 @@ class User(AbstractUser):
     role=models.CharField(max_length=1,choices=ROLE_CHOICES,default=ROLE_EMPLOYEE)
     phone=models.CharField(_('phone number'),max_length=11,validators=valid_number,unique=True)
     company=models.OneToOneField(Company,on_delete=models.SET_NULL,null=True)
+    
     USERNAME_FIELD='phone'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['email','username']
     
     
     def __str__(self) :
