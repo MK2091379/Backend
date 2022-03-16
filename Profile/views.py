@@ -1,3 +1,11 @@
+from urllib import request
 from django.shortcuts import render
 
-# Create your views here.
+def update():
+    pass
+def delete(reques):
+    pass
+def create():
+    pass
+def view():
+    pass
