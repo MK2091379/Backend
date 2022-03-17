@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #debug tools 
     'debug_toolbar',
-    
+        
     #rest api 
     'rest_framework',
+    'djoser',
+    'rest_framework.authtoken',
     
 ]
 
@@ -145,3 +147,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #add customized user model
 AUTH_USER_MODEL = 'Register.User'
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
+    ),
+}
+
+
+
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
