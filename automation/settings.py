@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'Register',
     'Profile',
-    'Profile.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [

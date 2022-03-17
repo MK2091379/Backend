@@ -6,6 +6,7 @@ from django.db import models
 from Register.models import User,Company
 from automation import settings
 from django.core.validators import RegexValidator
+from django.utils.translation import gettext_lazy as _
 
 class Employee(models.Model):
     sexuality_choises = [
@@ -23,7 +24,7 @@ class Employee(models.Model):
         ("M","Master",),
         ("O","Other")
     ]
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=CASCADE) 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE) 
     birthdate = models.DateField(null=True,blank=True)
     image = models.ImageField(_("image"), upload_to=None, height_field=20, width_field=20, max_length=None,default = "",null = True)
     personal_id = models.CharField(max_length=10,validators=[RegexValidator(regex='^[0-9]{10}')],null=True,blank=True)
