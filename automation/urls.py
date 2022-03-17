@@ -25,5 +25,6 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('api/company',views.CompanyList.as_view()),
     path('api/user',views.UserList2.as_view()),
-    path('api-auth/',include('rest_framework.urls'))
+    path('api-auth/',include('rest_framework.urls')),
+    path('api/', include('Profile.urls')),
 ]

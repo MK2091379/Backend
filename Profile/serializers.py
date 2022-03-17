@@ -5,10 +5,10 @@ from .models import Employee,CompanyOwner
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model=Employee
-        fields="_all_"
+        fields="__all__"
 
 
 class CompanyOwnerSerializer(serializers.ModelSerializer):
     class Meta:
         model=CompanyOwner
-        fields="_all_"
+        fields="__all__"
