@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     
     #app
     'Register',
+    'Profile',
     
     #tools 
     'django.contrib.admin',
@@ -49,6 +50,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
+    
+ 
     
 ]
 

@@ -25,8 +25,9 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('api/',include('Register.urls')),
     path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt'))
+    path('auth/', include('djoser.urls.jwt')),
     # path('api/company',views.CompanyList.as_view()),
     # path('api/',views.UserList2.as_view()),
     # path('api-auth/',include('rest_framework.urls'))
+    path('api/', include('Profile.urls')),
 ]
