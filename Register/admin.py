@@ -6,8 +6,18 @@ from .models import User,Company
 
 
 class CustomUserAdmin(UserAdmin):
+   
     add_form = CustomUserCreationForm
     model = User
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("username", "password1", "password2"),
+            },
+        ),
+    )
     
 
 admin.site.register(User, CustomUserAdmin)

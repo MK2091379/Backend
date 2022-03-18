@@ -9,8 +9,10 @@ from .manager import UserCreateManager
 
 
 class Company(models.Model):
+    
     company_name=models.CharField(max_length=255,primary_key=True)
     company_biography=models.TextField()
+    
     
     def __str__(self) :
         return self.company_name
@@ -33,7 +35,7 @@ class User(AbstractUser):
     email=models.EmailField(_('email address'), unique=True)
     role=models.CharField(max_length=1,choices=ROLE_CHOICES)
     phone=models.CharField(_('phone number'),max_length=11,validators=valid_number,unique=True)
-    company=models.OneToOneField(Company,on_delete=models.SET_NULL,null=True)
+    company=models.ForeignKey(Company,on_delete=models.PROTECT)
     username=models.CharField(max_length=255,default=phone)
     USERNAME_FIELD='phone'
     REQUIRED_FIELDS = ['email']
