@@ -31,16 +31,28 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
+    #app
+    'Register',
+    'Profile',
+    
+    #tools 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #debug tools 
     'debug_toolbar',
+        
+    #rest api 
     'rest_framework',
-    'Register',
-    'Profile',
+    'djoser',
+    'rest_framework.authtoken',
+    
+ 
+    
 ]
 
 MIDDLEWARE = [
@@ -134,4 +146,23 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+#add customized user model
 AUTH_USER_MODEL = 'Register.User'
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
+    ),
+}
+
+
+
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
