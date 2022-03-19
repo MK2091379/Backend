@@ -1,7 +1,7 @@
 from dataclasses import field
 from rest_framework import serializers
 from .models import User,Company
-
+from djoser.serializers import UserSerializer as BaseUserSerializer
 
 
 
@@ -9,6 +9,7 @@ class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model=Company
         fields=['company_name','company_biography']
+
 
 class EmployeeSerializer(serializers.ModelSerializer):
     role=serializers.CharField(read_only=True)
@@ -34,7 +35,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
         return user
         
 
-
+class EmployeeBaseSerializer(BaseUserSerializer):
+    class Meta(BaseUserSerializer.Meta):
+         fields=['first_name','last_name','phone','email']
+    
+    
 class CompnyOwnerSerializer(serializers.ModelSerializer):
     role=serializers.CharField(read_only=True)
     company=CompanySerializer()

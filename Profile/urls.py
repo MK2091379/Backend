@@ -7,4 +7,9 @@ urlpatterns = [
 	path('all/', views.view_items, name='view_items'),
 	path('update/', views.update_items, name='update-items'),
 	path('delete/', views.delete_items, name='delete-items'),
+ 
+ 
+ 
+ 
+    
 ]

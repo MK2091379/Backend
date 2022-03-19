@@ -1,10 +1,19 @@
-from django.urls import path,include
+from django.urls import path,include,re_path
 from . import views
 
 
 
-urlpatterns=[
-    path('employee/',views.CreateEmployeeView.as_view()),
-    path('company-owner/',views. CompanyOwnerView.as_view()),
 
+
+
+
+
+
+urlpatterns=[
+    path('employee/signup/',views.CreateEmployeeView.as_view()),
+    path('company-owner/signup/',views. CompanyOwnerView.as_view()),
+    
+    
+   
+   
 ]
