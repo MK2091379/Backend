@@ -26,7 +26,7 @@ class Employee(models.Model):
     ]
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE) 
     birthdate = models.DateField(null=True,blank=True)
-    image = models.ImageField(_("image"), upload_to=None, height_field=20, width_field=20, max_length=None,default = "",null = True)
+    image = models.ImageField(_("image"), upload_to='Images/%Y/%m/%d/', height_field=20, width_field=20, max_length=None,default = "",null = True,blank=True)
     personal_id = models.CharField(max_length=10,validators=[RegexValidator(regex='^[0-9]{10}')],null=True,blank=True)
     father_full_name = models.CharField(max_length=50,null=True,blank=True)
     mother_full_name = models.CharField(max_length=50,null=True,blank=True)
