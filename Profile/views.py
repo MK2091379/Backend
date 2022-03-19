@@ -10,13 +10,6 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 
-
-#class EmployeeView(generics.ListCreateAPIView):
-#
-#    queryset=Employee.objects.all()
-#    serializer_class=EmployeeSerializer
-#    permissions.IsAuthenticatedOrReadOnly
-
 @api_view(['GET'])
 def ApiOverview_E(request):
     api_urls = {
@@ -67,13 +60,7 @@ def delete_items_E(request, pk):
 	item = get_object_or_404(Employee, pk=pk)
 	item.delete()
 	return Response(status=status.HTTP_202_ACCEPTED)
-
-
-
-
-
-
-
+##########################################################################################
 @api_view(['GET'])
 def ApiOverview_C(request):
     api_urls = {
