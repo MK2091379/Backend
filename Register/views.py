@@ -4,7 +4,7 @@ from .models import Company, User
 from .serializers import  EmployeeSerializer,CompnyOwnerSerializer,CompanySerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+
 
 class CreateEmployeeView(generics.ListCreateAPIView):
     queryset = User.objects.all()
