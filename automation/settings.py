@@ -27,7 +27,11 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['automationapp-prod.herokuapp.com','127.0.0.1']
+=======
+ALLOWED_HOSTS = ['django-app000.herokuapp.com','127.0.0.1']
+>>>>>>> 81899cbde96241e90076f9d92195370454bcda45
 
 
 # Application definition
