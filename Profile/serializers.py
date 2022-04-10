@@ -5,11 +5,11 @@ from rest_framework import serializers
 from django.conf import settings
 from Register.models import Company, User
 from .models import Employee,CompanyOwner
-class EmployeeSerializer(serializers.ModelSerializer):
+class EmployeeProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = "__all__"
-class CompanyOwnerSerializer(serializers.ModelSerializer):
+class CompanyOwnerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyOwner
         fields = "__all__"

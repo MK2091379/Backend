@@ -1,8 +1,10 @@
+from asyncio import events
+from multiprocessing import Event
 from urllib import request
 from django.shortcuts import render
 from rest_framework import generics,permissions
 from .models import Employee,CompanyOwner
-from .serializers import CompanyOwnerSerializer, EmployeeSerializer,CompanyOwnerSerializer
+from .serializers import  EmployeeProfileSerializer,CompanyOwnerProfileSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -10,6 +12,9 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.decorators import action
+
+
 
 #@api_view(['GET'])
 #def ApiOverview_E(request):
@@ -114,14 +119,21 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 
 
-class EmployeeViewSet(CreateModelMixin,RetrieveModelMixin,UpdateModelMixin,GenericViewSet):
+class EmployeeViewSet(ModelViewSet):
     queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
-
-
-
-
-
+    serializer_class = EmployeeProfileSerializer
+    @action(detail=False, methods=['GET', 'PUT'])
+    def me(self, request):
+        (employee, created) = Employee.objects.get_or_create(
+            user_id=request.user.id)
+        if request.method == 'GET':
+            serializer = EmployeeProfileSerializer(employee)
+            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = EmployeeProfileSerializer(employee, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
 
 
 
