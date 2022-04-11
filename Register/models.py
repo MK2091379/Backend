@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
-from .manager import UserCreateManager
+
 
 
 
@@ -27,6 +27,25 @@ class User(AbstractUser):
         (ROLE_EMPLOYEE,'Employee'),
     ]
     
+    sexuality_choises = [
+        ("M","Male",),
+        ("F","Female",),
+        ("O","Other",)
+    ]
+    maritalـstatus_choises = [
+        ("M","Maried",),
+        ("S","Single",)
+    ]
+    degreeـofـeducationـchoises = [
+        ("D","Diploma",),
+        ("B","Bachelor",),
+        ("M","Master",),
+        ("O","Other")
+    ]
+    
+    
+    
+    
     #regex for phone iranian phone number 
     valid_number=[RegexValidator(regex='09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}')]
     
@@ -34,14 +53,23 @@ class User(AbstractUser):
     last_name=models.CharField(_('last name'),max_length=60)
     email=models.EmailField(_('email address'), unique=True)
     role=models.CharField(max_length=1,choices=ROLE_CHOICES)
-    phone=models.CharField(_('phone number'),max_length=11,validators=valid_number,unique=True)
+    username=models.CharField(_('phone number'),max_length=11,validators=valid_number,unique=True)
     company=models.ForeignKey(Company,on_delete=models.PROTECT)
-    username=models.CharField(max_length=255,default=phone)
-    USERNAME_FIELD='phone'
-    REQUIRED_FIELDS = ['email']
+    birthdate = models.DateField(null=True,blank=True)
+    personal_id = models.CharField(max_length=10,validators=[RegexValidator(regex='^[0-9]{10}')],null=True,blank=True)
+    father_full_name = models.CharField(max_length=50,null=True,blank=True)
+    mother_full_name = models.CharField(max_length=50,null=True,blank=True)
+    address = models.TextField(null=True,blank=True)
+    postal_code = models.CharField(max_length=10,validators=[RegexValidator(regex='^[0-9]{10}')],null=True)
+    sexuality = models.CharField(max_length=1,choices=sexuality_choises,default="M")
+    telephone = models.CharField(max_length=11,validators=[RegexValidator(regex='^0[0-9]{2,}[0-9]{7,}$')],null=True)
+    maritalـstatus = models.CharField(max_length=1,choices=maritalـstatus_choises,default="S")
+    degreeـofـeducation = models.CharField(max_length=1,choices=degreeـofـeducationـchoises,default="O")
+   
+  
+
     
-    
-    object=UserCreateManager()
+
     
     
 

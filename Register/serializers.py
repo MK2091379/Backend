@@ -15,7 +15,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     role=serializers.CharField(read_only=True)
     class Meta:
         model=User
-        fields=['first_name','last_name','phone','email','company','role','password']
+        fields=['first_name','last_name','username','email','company','role','password']
     
     def create(self, validated_data):
         user = User.objects.create(
@@ -23,7 +23,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            phone=validated_data['phone'],
+            username=validated_data['username'],
             email=validated_data['email'],
             company=validated_data['company'],
             role='E'
@@ -36,8 +36,12 @@ class EmployeeSerializer(serializers.ModelSerializer):
         
 
 class EmployeeBaseSerializer(BaseUserSerializer):
-    class Meta(BaseUserSerializer.Meta):
-         fields=['first_name','last_name','phone','email']
+     class Meta(BaseUserSerializer.Meta):
+          fields=['username','first_name','last_name',
+                  'email','role','company','birthdate',
+                  'personal_id','father_full_name','mother_full_name',
+                  'address','postal_code','sexuality','telephone',
+                  'maritalـstatus','degreeـofـeducation']
     
     
 class CompnyOwnerSerializer(serializers.ModelSerializer):
@@ -46,7 +50,7 @@ class CompnyOwnerSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=User
-        fields=['company','first_name','last_name','phone','email','role','password']
+        fields=['company','first_name','last_name','username','email','role','password']
         
         
         
@@ -57,7 +61,7 @@ class CompnyOwnerSerializer(serializers.ModelSerializer):
             company_owner,created=User.objects.update_or_create(company=company,
             first_name=validated_data.pop('first_name'),
             last_name=validated_data.pop('last_name'), 
-            phone=validated_data.pop('phone'), 
+            username=validated_data.pop('username'), 
             email=validated_data.pop('email'),
             role='C' 
             

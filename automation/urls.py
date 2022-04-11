@@ -54,6 +54,11 @@ urlpatterns = [
     #path('api/company',views.CompanyList.as_view()),
     #path('api/',views.UserList2.as_view()),
     #path('api-auth/',include('rest_framework.urls'))
+    # path('api/company',views.CompanyList.as_view()),
+    # path('api/',views.UserList2.as_view()),
+    # path('api-auth/',include('rest_framework.urls'))
+   
+    
     
     
     
