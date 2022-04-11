@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
-import django
-import django_heroku
+import django,os
+#import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     
     #app
     'Register',
-    'Profile',
+    #'Profile',
     
     #tools 
     'django.contrib.admin',
@@ -170,6 +170,7 @@ AUTH_USER_MODEL = 'Register.User'
 
 
 REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         
@@ -185,6 +186,7 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=365),
+    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
  
@@ -203,4 +205,4 @@ DJOSER={
     
 }
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
