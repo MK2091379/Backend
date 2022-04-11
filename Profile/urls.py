@@ -13,5 +13,6 @@ from rest_framework_nested import routers
 #	#path('item/<int:pk>/deleteC/', views.delete_items_C, name='delete_items-C'),
 #]
 router = routers.DefaultRouter()
-router.register('viewE', views.EmployeeViewSet)
+router.register('employee', views.EmployeeViewSet)
+#router.register('deleteE', views.EmployeeViewSet)
 urlpatterns = router.urls

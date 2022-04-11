@@ -134,7 +134,21 @@ class EmployeeViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
-
+class EmployeeDeleteSet(ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeProfileSerializer
+    @action(detail=False, methods=['GET', 'PUT'])
+    def me(self, request):
+        (employee, created) = Employee.objects.delete(
+            user_id=request.user.id)
+        if request.method == 'GET':
+            serializer = EmployeeProfileSerializer(employee)
+            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = EmployeeProfileSerializer(employee, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
 
 
 
