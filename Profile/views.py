@@ -14,155 +14,29 @@ from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveM
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import action
 
-
-
-#@api_view(['GET'])
-#def ApiOverview_E(request):
-#    api_urls = {
-#        'all_items': '/',
-#        'Search by Category': '/?category=category_name',
-#        'Search by Subcategory': '/?subcategory=category_name',
-#        'Add': '/create',
-#        'Update': '/update/pk',
-#        'Delete': '/item/pk/delete'
-#    }
-#  
-#    return Response(api_urls)
-#@api_view(['POST'])
-#def add_items_E(request):
-#    item = EmployeeSerializer(data=request.data)
-#  
-#    if Employee.objects.filter(**request.data).exists():
-#        raise serializers.ValidationError('This data already exists')
-#  
-#    if item.is_valid():
-#        item.save()
-#        return Response(item.data)
-#    else:
-#        return Response(status=status.HTTP_404_NOT_FOUND)
-#@api_view(['GET'])
-#def view_items_E(request):
-#	if request.query_params:
-#		items = Employee.objects.filter(**request.query_param.dict())
-#	else:
-#		items = Employee.objects.all()
-#	if items:
-#		data = EmployeeSerializer(items)
-#		return Response(data)
-#	else:
-#		return Response(status=status.HTTP_404_NOT_FOUND)
-#@api_view(['POST'])
-#def update_items_E(request, pk):
-#	item = Employee.objects.get(pk=pk)
-#	data = EmployeeSerializer(instance=item, data=request.data)
-#
-#	if data.is_valid():
-#		data.save()
-#		return Response(data.data)
-#	else:
-#		return Response(status=status.HTTP_404_NOT_FOUND)
-#@api_view(['DELETE'])
-#def delete_items_E(request, pk):
-#	item = get_object_or_404(Employee, pk=pk)
-#	item.delete()
-#	return Response(status=status.HTTP_202_ACCEPTED)
-###########################################################################################
-#@api_view(['GET'])
-#def ApiOverview_C(request):
-#    api_urls = {
-#        'all_items': '/',
-#        'Search by Category': '/?category=category_name',
-#        'Search by Subcategory': '/?subcategory=category_name',
-#        'Add': '/create',
-#        'Update': '/update/pk',
-#        'Delete': '/item/pk/delete'
-#    }
-#  
-#    return Response(api_urls)
-#@api_view(['POST'])
-#def add_items_C(request):
-#    item = CompanyOwner(data=request.data)
-#    if CompanyOwner.objects.filter(**request.data).exists():
-#        raise serializers.ValidationError('This data already exists')
-#  
-#    if item.is_valid():
-#        item.save()
-#        return Response(item.data)
-#    else:
-#        return Response(status=status.HTTP_404_NOT_FOUND)
-#@api_view(['GET'])
-#def view_items_C(request):
-#	if request.query_params:
-#		items = CompanyOwner.objects.filter(**request.query_param.dict())
-#	else:
-#		items = CompanyOwner.objects.all()
-#	if items:
-#		data = CompanyOwnerSerializer(items)
-#		return Response(data)
-#	else:
-#		return Response(status=status.HTTP_404_NOT_FOUND)
-#@api_view(['POST'])
-#def update_items_C(request, pk):
-#	item = CompanyOwner.objects.get(pk=pk)
-#	data = CompanyOwnerSerializer(instance=item, data=request.data)
-#
-#	if data.is_valid():
-#		data.save()
-#		return Response(data.data)
-#	else:
-#		return Response(status=status.HTTP_404_NOT_FOUND)
-#@api_view(['DELETE'])
-#def delete_items_C(request, pk):
-#	item = get_object_or_404(CompanyOwner, pk=pk)
-#	item.delete()
-#	return Response(status=status.HTTP_202_ACCEPTED)
-
-
-
-#class EmployeeViewSet(ModelViewSet):
-#    queryset = Employee.objects.all()
-#    serializer_class = EmployeeProfileSerializer
-#    @action(detail=False, methods=['GET', 'PUT'])
-#    def me(self, request):
-#        (employee, created) = Employee.objects.get_or_create(
-#            user_id=request.user.id)
-#        if request.method == 'GET':
-#            serializer = EmployeeProfileSerializer(employee)
-#            return Response(serializer.data)
-#        elif request.method == 'PUT':
-#            serializer = EmployeeProfileSerializer(employee, data=request.data)
-#            serializer.is_valid(raise_exception=True)
-#            serializer.save()
-#            return Response(serializer.data)
 class EmployeeViewSet(ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeProfileSerializer
     @action(detail=False, methods=['GET', 'PUT','PATCH','DELETE'])
     def me(self, request):
+        (employee, created) = Employee.objects.get_or_create(user_id=request.user.id)
         if request.method == 'GET':
-            (employee_got, created) = Employee.objects.get_or_create(
-            user_id=request.user.id)
-            serializer = EmployeeProfileSerializer(employee_got)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
+            serializer = EmployeeProfileSerializer(employee)
             return Response(serializer.data)
-        elif request.method == 'PATCH':
-            employee_updated = Employee.objects.update(user_id=request.user.id)
-            serializer = EmployeeProfileSerializer(employee_updated)
+        elif request.method == 'PUT':
+            serializer = EmployeeProfileSerializer(employee, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
         elif request.method == 'DELETE':
-            employee_deleted = Employee.objects.delete(user_id=request.user.id)
-            serializer = EmployeeProfileSerializer(employee_deleted)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-        elif request.method == 'PUT':
-            serializer = EmployeeProfileSerializer(employee_got, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
+            Employee.objects.get(user_id=employee).delete()
+            return Response("ok")
+        #elif request.method == 'PATCH':
+        #   employee_updated = Employee.objects.filter(user_id=request.user.id)
+        #   serializer = EmployeeProfileSerializer(employee_updated)
+        #   serializer.is_valid(raise_exception=True)
+        #   serializer.save()
+        #   return Response(serializer.data)
 
 
 

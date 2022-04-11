@@ -14,5 +14,5 @@ from rest_framework_nested import routers
 #]
 router = routers.DefaultRouter()
 router.register('employee', views.EmployeeViewSet)
-#router.register('deleteE', views.EmployeeViewSet)
+#router.register('company-owner', views.EmployeeViewSet)
 urlpatterns = router.urls

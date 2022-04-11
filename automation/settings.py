@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     
     #app
     'Register',
-    #'Profile',
+    'Profile',
     
     #tools 
     'django.contrib.admin',
