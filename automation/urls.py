@@ -17,6 +17,7 @@ import debug_toolbar
 from django.contrib import admin
 from django.urls import path,include
 from Register import urls
+#from TimeAndDateTracker import urls
 from rest_framework_simplejwt import views as jwt_views
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -50,7 +51,8 @@ urlpatterns = [
     path('api/',include('Register.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
-    path('profile/', include('Profile.urls')),
+    #path('tracker/', include('TimeAndDateTracker.urls')),
+    #path('profile/', include('Profile.urls')),
     #path('api/company',views.CompanyList.as_view()),
     #path('api/',views.UserList2.as_view()),
     #path('api-auth/',include('rest_framework.urls'))
