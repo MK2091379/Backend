@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     #app
     'Register',
     'TimeAndDateTracker',
+    'ToDoList',
 
     #tools 
     'django.contrib.admin',
