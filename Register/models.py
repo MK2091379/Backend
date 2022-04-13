@@ -54,7 +54,7 @@ class User(AbstractUser):
     email=models.EmailField(_('email address'), unique=True)
     role=models.CharField(max_length=1,choices=ROLE_CHOICES)
     username=models.CharField(_('phone number'),max_length=11,validators=valid_number,unique=True)
-    company=models.ForeignKey(Company,on_delete=models.PROTECT)
+    company=models.ForeignKey(Company,on_delete=models.PROTECT,null=True,blank=True)
     birthdate = models.DateField(null=True,blank=True)
     personal_id = models.CharField(max_length=10,validators=[RegexValidator(regex='^[0-9]{10}')],null=True,blank=True)
     father_full_name = models.CharField(max_length=50,null=True,blank=True)

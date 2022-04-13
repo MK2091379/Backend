@@ -1,8 +1,9 @@
 from django.urls import path#,include,re_path
 from . import views
+from rest_framework_nested import routers
 
 
 
-urlpatterns=[
-    path('employee/',views.submit_date_and_time)
-]
+router = routers.DefaultRouter()
+router.register('employee', views.TimeAndDateTrackerViewSet)
+urlpatterns = router.urls
