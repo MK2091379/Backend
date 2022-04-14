@@ -17,13 +17,12 @@ class TimeAndDateTrackerViewSet(ModelViewSet):
     serializer_class = TimeAndDateTrackerSerializer
     @action(detail=False, methods=['GET','PUT'])
     def me(self, request):
-        tracker = TimeAndDateTracker.objects.get(pk=1)
-        #if request.method == 'GET':
-        #    serializer = TimeAndDateTrackerSerializer(tracker)
-        #    return Response(serializer.data)
-        #elif request.method == 'PUT':
-        #    serializer = TimeAndDateTrackerSerializer(tracker, data=request.data)
-        #    serializer.is_valid(raise_exception=True)
-        #    serializer.save()
-        #    return Response(serializer.data)
-        return Response(tracker)
+        (tracker,created) = TimeAndDateTracker.objects.get_or_create(pk=request.user.id)
+        if request.method == 'GET':
+            serializer = TimeAndDateTrackerSerializer(tracker)
+            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = TimeAndDateTrackerSerializer(tracker, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
