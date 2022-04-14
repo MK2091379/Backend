@@ -5,5 +5,5 @@ from rest_framework_nested import routers
 
 
 router = routers.DefaultRouter()
-router.register('employee', views.TimeAndDateTrackerViewSet)
+router.register('', views.TimeAndDateTrackerViewSet)
 urlpatterns = router.urls
