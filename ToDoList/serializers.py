@@ -9,8 +9,7 @@ from .models import Task
 
 class TaskSerializer(serializers.Serializer):
     description=serializers.CharField(max_length=None)
-    checkbox=serializers.BooleanField()
-    deadline=serializers.DateTimeField()  
+    checkbox=serializers.BooleanField() 
     # def checking_checkbox(self,Task:Task):
     #     if(Task.creation_time==datetime.now()):
     #          Task.checkbox=False
