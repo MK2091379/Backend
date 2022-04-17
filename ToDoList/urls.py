@@ -6,6 +6,7 @@ from rest_framework_nested import routers
 
 router = routers.DefaultRouter()
 router.register('mytodolist', views.ToDoListViewSet)
+router.register('mytodolist/update', views.TaskUpdatingSet)
 urlpatterns = router.urls
 
     

@@ -7,19 +7,16 @@ class TaskSerializer(serializers.ModelSerializer):
     priority=serializers.IntegerField()
     description=serializers.CharField(max_length=None)
     checkbox=serializers.BooleanField() 
+    id = serializers.IntegerField(read_only = True)
     class Meta:
         model=Task
-        fields=['priority','description','checkbox','user_id']
- 
-    # def checking_checkbox(self,Task:Task):
-    #     if(Task.creation_time==datetime.now()):
-    #          Task.checkbox=False
-    
-   
-   
-    # def validate(self, attrs):
-    #     if attrs['priority']<=0:
-    #         return serializers.ValidationError("priority must be positive")
+        fields=['id','priority','description','checkbox','user_id']
+class TaskUpdatingSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(read_only=True)
+    id = serializers.IntegerField(read_only = False)
+    class Meta:
+        model = Task
+        fields = ['id','priority','description','checkbox','user_id']
     
    
         

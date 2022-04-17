@@ -4,7 +4,7 @@ import ToDoList
 from .models import Task
 from rest_framework.decorators import api_view,action
 from rest_framework.response import Response
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer,TaskUpdatingSerializer
 from ToDoList import serializers
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
@@ -28,17 +28,17 @@ class ToDoListViewSet(ModelViewSet):
                serializer.is_valid(raise_exception=True)
                serializer.save()
                return Response(serializer.data)
-
-
-# @api_view(['GET','DELETE'])    
-# def todo_view_dataile(request,id1,id2):
-#     result=Task.objects.filter(user_id=id1).get(pk=id2)
-#     if request.method=='GET':   
-#              serializer=TaskSerializer(result)
-#              return Response(serializer.data)
-#     elif request.method=='DELETE':
-#             result.delete()
-#             return Response("ok")
+class TaskUpdatingSet(ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskUpdatingSerializer
+    @action(detail=False, methods=['PUT'])
+    def me(self, request):
+          if request.method == 'PUT':
+               task = Task.objects.get(user_id=request.user.id,id=request.data["id"])
+               serializer = TaskUpdatingSerializer(task, data=request.data)
+               serializer.is_valid(raise_exception=True)
+               serializer.save()
+               return Response(serializer.data)
     
               
         
