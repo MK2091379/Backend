@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns=[
     
-    path('showmytodo/<int:id>/',views.todo_view),
+    path('mytodolist/<int:id>/',views.todo_view_list),
+    path('mytodolist/<int:id1>/<int:id2>',views.todo_view_dataile),
     
 ]

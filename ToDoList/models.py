@@ -1,11 +1,11 @@
-
 from django.db import models
 from Register.models import User 
 
 # Create your models here.
 
 class Task(models.Model):
-
+    
+    priority=models.PositiveIntegerField()
     description=models.TextField()
     checkbox=models.BooleanField(default=False)
     last_update=models.DateTimeField( auto_now=True)
