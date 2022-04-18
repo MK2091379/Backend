@@ -40,7 +40,6 @@ class TimeAndDateTrackerUpdatingSet(ModelViewSet):
             serializer.save()
             return Response(serializer.data)                
         
-
 #{
 #  "date": "2022-04-16",
 #  "start_point": null,

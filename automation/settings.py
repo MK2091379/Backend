@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import django,os
-#import django_heroku
+import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -206,4 +206,4 @@ DJOSER={
     
 }
 
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
