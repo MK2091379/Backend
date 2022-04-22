@@ -19,7 +19,7 @@ class ToDoListViewSet(ModelViewSet):
      @action(detail=False,methods=['GET','POST'])    
      def todo_view_list(self,request):
          if request.method=='GET':
-               queryset = Task.objects.filter(user_id=request.user.id)
+               queryset = Task.objects.filter(user_id=request.user.id).order_by('-priority')
                serializer = TaskSerializer(queryset,many=True)
                return Response(serializer.data)
          elif request.method=='POST':
