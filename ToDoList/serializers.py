@@ -11,12 +11,12 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model=Task
         fields=['id','priority','description','checkbox','user_id']
-class TaskUpdatingSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(read_only=True)
-    id = serializers.IntegerField(read_only = False)
-    class Meta:
-        model = Task
-        fields = ['id','priority','description','checkbox','user_id']
+# class TaskUpdatingSerializer(serializers.ModelSerializer):
+#     user_id = serializers.IntegerField(read_only=True)
+#     id = serializers.IntegerField(read_only = False)
+#     class Meta:
+#         model = Task
+#         fields = ['id','priority','description','checkbox','user_id']
     
    
         
