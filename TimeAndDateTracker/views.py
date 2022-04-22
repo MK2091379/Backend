@@ -9,10 +9,12 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 
 
 class TimeAndDateTrackerViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = TimeAndDateTracker.objects.all()
     serializer_class = TimeAndDateTrackerSerializer
     @action(detail=False, methods=['GET','POST'])
@@ -29,6 +31,7 @@ class TimeAndDateTrackerViewSet(ModelViewSet):
             return Response(serializer.data)
 
 class TimeAndDateTrackerUpdatingSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = TimeAndDateTracker.objects.all()
     serializer_class = TimeAndDateTrackerUpdatingSerializer
     @action(detail=False, methods=['PUT'])
