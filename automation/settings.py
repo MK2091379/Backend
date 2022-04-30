@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     #app
     'Register',
     'TimeAndDateTracker',
+    'ToDoList',
 
     #tools 
     'django.contrib.admin',
@@ -66,6 +67,9 @@ INSTALLED_APPS = [
     #drf-yasg 
     'drf_yasg',
     
+    #CORD
+    "corsheaders",
+    
  
     
 ]
@@ -74,12 +78,21 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
 INTERNAL_IPS = [
 
     "127.0.0.1",
@@ -189,11 +202,10 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         
     ),
-    #"DEFAULT_PERMISSION_CLASSES": [
-    #    "rest_framework.permissions.IsAuthenticated",
-    #],
+    #  'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ]
 }
-
 
 
 
