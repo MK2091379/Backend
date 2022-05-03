@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Register',
     'TimeAndDateTracker',
     'ToDoList',
+    'Transportation',
 
     #tools 
     'django.contrib.admin',
@@ -64,6 +65,9 @@ INSTALLED_APPS = [
     
     #CORD
     "corsheaders",
+    
+    #map
+    'location_field.apps.DefaultConfig'
     
  
     
@@ -216,6 +220,11 @@ DJOSER={
               
         }
     
+}
+LOCATION_FIELD = {
+    'map.provider': 'openstreetmap',
+    'search.provider': 'nominatim',
+    'provider.openstreetmap.max_zoom': 18,
 }
 
 django_heroku.settings(locals())
