@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AdminTransportation
+from .models import AdminTransportation,TransportationsRequest
 
 
 class AdminTransportationSerializer(serializers.ModelSerializer):
@@ -12,4 +12,11 @@ class AdminTransportationSerializer(serializers.ModelSerializer):
                  'address_search','location',
                 'arrival_time','Return_time']
         
+        read_only_fields = ['id']
+
+class RequestTransportationSerializer(serializers.ModelSerializer):  
+    
+    class Meta:
+        model=TransportationsRequest
+        fields=['id','request']
         read_only_fields = ['id']
