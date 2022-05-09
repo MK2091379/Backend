@@ -1,4 +1,5 @@
 from calendar import WEDNESDAY
+import defusedxml
 from django.db import models
 from Register.models import User
 from location_field.models.plain import PlainLocationField
@@ -30,7 +31,16 @@ class AdminTransportation(models.Model):
     
     
 class TransportationsRequest(models.Model):
+    
+    Services=[
+    
+        ("E","Etc"),
+        ("T","Transportation"),
+    ]
+    
+    
     request=models.TextField()
+    type_of_service=models.CharField(max_length=2,choices=Services,default='E')
     creation_time=models.DateTimeField( auto_now_add=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     
