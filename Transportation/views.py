@@ -6,16 +6,22 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view,action
 from rest_framework.response import Response
+
+
+
+
+
+from automation.permissions import IsCompanyOwner,IsEmployee
 # Create your views here.
 
 
 class AdminTransportationViewSet(ModelViewSet):
-     permission_classes = [IsAuthenticated]
+     permission_classes = [IsAuthenticated,IsCompanyOwner]
      queryset = AdminTransportation.objects.all()
      serializer_class=AdminTransportationSerializer
      @action(detail=False,methods=['GET','POST'])    
      def admin_transportation_view_list(self,request):
-         if reque       st.method=='GET':
+         if request.method=='GET':
                queryset = AdminTransportation.objects.filter(admin_id=request.user.id)
                serializer = AdminTransportationSerializer(queryset,many=True)
                return Response(serializer.data)
@@ -29,7 +35,7 @@ class AdminTransportationViewSet(ModelViewSet):
 class ServiceUpdatingSet(ModelViewSet):
       
     serializer_class=AdminTransportationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,IsCompanyOwner]
 
     @action(detail=False, methods=['PUT','DELETE'])
     def serviceupdate (self, request,id1):
