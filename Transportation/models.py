@@ -26,3 +26,12 @@ class AdminTransportation(models.Model):
     wednesday=models.BooleanField(default=False)
     thursday=models.BooleanField(default=False)
     friday=models.BooleanField(default=False)
+    
+    
+    
+class TransportationsRequest(models.Model):
+    request=models.TextField()
+    creation_time=models.DateTimeField( auto_now_add=True)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    
+
