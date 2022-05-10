@@ -65,6 +65,7 @@ class User(AbstractUser):
     telephone = models.CharField(max_length=11,validators=[RegexValidator(regex='^0[0-9]{2,}[0-9]{7,}$')],null=True)
     maritalـstatus = models.CharField(max_length=1,choices=maritalـstatus_choises,default="S")
     degreeـofـeducation = models.CharField(max_length=1,choices=degreeـofـeducationـchoises,default="O")
+    check_transportation=models.BooleanField(default=False)
    
   
 
