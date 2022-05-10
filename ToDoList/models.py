@@ -1,6 +1,7 @@
 from django.db import models
 from Register.models import User 
 
+
 # Create your models here.
 
 class Task(models.Model):
