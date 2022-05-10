@@ -67,3 +67,16 @@ class RequestViewSet(ModelViewSet):
                serializer.is_valid(raise_exception=True)
                serializer.save()
                return Response(serializer.data)
+         
+class Get_Request_Admin_ViewSet(ModelViewSet):
+      
+     permission_classes = [IsAuthenticated,IsCompanyOwner]
+     queryset =RequestUser.objects.all()
+     serializer_class=RequestUserSerializer
+     @action(detail=False,methods=['GET'])    
+     def request_admin_view_list(self,request):
+         if request.method=='GET':
+               queryset = RequestUser.objects.filter(user_company=request.user.company)
+               serializer = RequestUserSerializer(queryset,many=True)
+               return Response(serializer.data)
+        
