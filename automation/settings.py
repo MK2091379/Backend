@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import django,os
-import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,40 +28,42 @@ SECRET_KEY = 'django-insecure-76_!(wqzm$ds71$a&m(m07xn5cf2)mgag0cyuog*rozg)fj0$p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','404g.pythonanywhere.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    
+
     #app
     'Register',
     'TimeAndDateTracker',
     'ToDoList',
     'ServiceCounter',
+    'HRdesk',
+    'BulletinBoard',
 
-    #tools 
+    #tools
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #debug tools 
+    #debug tools
     'debug_toolbar',
-        
-    #rest api 
+
+    #rest api
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
-    
+
     #swagger
     'rest_framework_swagger',
-    
-    #drf-yasg 
+
+    #drf-yasg
     'drf_yasg',
-    
+
     #CORD
     "corsheaders",
     
@@ -71,6 +72,9 @@ INSTALLED_APPS = [
     
  
     
+
+
+
 ]
 
 MIDDLEWARE = [
@@ -95,7 +99,7 @@ CORS_ALLOWED_ORIGINS = [
 INTERNAL_IPS = [
 
     "127.0.0.1",
-    
+
 ]
 
 ROOT_URLCONF = 'automation.urls'
@@ -167,7 +171,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = BASE_DIR / 'static'
 
 
 
@@ -191,7 +195,7 @@ REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        
+
     ),
     #  'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
@@ -206,7 +210,7 @@ SIMPLE_JWT = {
     #'AUTH_HEADER_TYPES': ('JWT',),
 }
 
- 
+
 SWAGGER_SETTINGS = {
     "SECURITY_DEFINITIONS": {
         "Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}
@@ -214,7 +218,7 @@ SWAGGER_SETTINGS = {
 }
 
 DJOSER={
-    
+
         'SERIALIZERS':{
               'current_user': 'Register.serializers.EmployeeBaseSerializer',
               
@@ -227,4 +231,6 @@ LOCATION_FIELD = {
     'provider.openstreetmap.max_zoom': 18,
 }
 
-django_heroku.settings(locals())
+        
+
+
