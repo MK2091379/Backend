@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from .models import AdminTransportation,TransportationsRequest
+from .models import AdminTransportation,RequestUser
 
 
-class AdminTransportationSerializer(serializers.ModelSerializer):
-        
+class AdminTransportationSerializer(serializers.ModelSerializer):  
     
     class Meta:
         model=AdminTransportation
@@ -14,9 +13,13 @@ class AdminTransportationSerializer(serializers.ModelSerializer):
         
         read_only_fields = ['id']
 
-class RequestTransportationSerializer(serializers.ModelSerializer):  
+class RequestUserSerializer(serializers.ModelSerializer):  
     
     class Meta:
-        model=TransportationsRequest
-        fields=['id','request']
+        model=RequestUser
+        fields=['id','request','type_of_service']
         read_only_fields = ['id']
+
+
+class ResponseApiSerializer(serializers.ModelSerializer):
+    pass

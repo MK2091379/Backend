@@ -1,6 +1,7 @@
+from multiprocessing.dummy import active_children
 from django.shortcuts import get_object_or_404
-from .models import AdminTransportation
-from .serializers import AdminTransportationSerializer
+from .models import AdminTransportation,RequestUser
+from .serializers import AdminTransportationSerializer,RequestUserSerializer
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
@@ -49,3 +50,20 @@ class ServiceUpdatingSet(ModelViewSet):
           elif request.method == 'DELETE':
                 service.delete()
                 return Response(status=status.HTTP_200_OK)
+class RequestViewSet(ModelViewSet):
+      
+     permission_classes = [IsAuthenticated,IsEmployee]
+     queryset =RequestUser.objects.all()
+     serializer_class=RequestUserSerializer
+     @action(detail=False,methods=['GET','POST'])    
+     def request_view_list(self,request):
+         if request.method=='GET':
+               queryset = RequestUser.objects.filter(user_id=request.user.id)
+               serializer = RequestUserSerializer(queryset,many=True)
+               return Response(serializer.data)
+         elif request.method=='POST':
+               location = RequestUser.objects.create(user_id=request.user.id,user=request.user)
+               serializer = RequestUserSerializer(location, data=request.data)
+               serializer.is_valid(raise_exception=True)
+               serializer.save()
+               return Response(serializer.data)
