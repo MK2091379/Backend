@@ -66,15 +66,12 @@ INSTALLED_APPS = [
 
     #CORD
     "corsheaders",
-<<<<<<< HEAD
-=======
     
     #map
     'location_field.apps.DefaultConfig'
     
  
     
->>>>>>> 2cc702dc4b95b4ea6e048abb51a509cc128c9c81
 
 
 
