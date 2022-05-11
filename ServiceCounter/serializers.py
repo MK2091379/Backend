@@ -9,7 +9,7 @@ class AdminTransportationSerializer(serializers.ModelSerializer):
         fields=['id','address',
                 'maximum_capacity','details',
                  'address_search','location',
-                'arrival_time','Return_time']
+                'arrival_time','Return_time','saturday','sunday','monday','tuesday','wednesday','thursday','friday']
         
         read_only_fields = ['id']
 
