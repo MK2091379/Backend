@@ -17,8 +17,8 @@ class BulletinBoardViewSet(ModelViewSet):
     @action(detail=False, methods=['GET'])
     def get_bulletin_board(self, request):
         if request.method == 'GET':
-            query = BulletinBoard.objects.all()
-            serializer = BulletinBoardSerializer(query)
+            queryset = BulletinBoard.objects.all()
+            serializer = BulletinBoardSerializer(queryset,many=True)
             return Response(serializer.data)
     @action(detail=False, methods=['POST'])
     def post_bulletin_board(self, request):
