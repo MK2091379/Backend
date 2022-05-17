@@ -5,7 +5,7 @@ from Register.models import User
 
 from ServiceCounter import admin
 from .models import AdminTransportation
-from .serializers import AdminTransportationSerializer, EmployeeGetSerializer
+from .serializers import AdminTransportationSerializer, EmployeeGetSerializer,UserTransportationSerializer
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
@@ -82,13 +82,16 @@ class EmployeeReserve(ModelViewSet):
                reserve.save()
                return Response(status=status.HTTP_200_OK)
             #    serializer = EmployeeGetSerializer(queryset,many=True)
-#      @action(detail=False,methods=['GET'])   
-#      def reserve_view(self,request):
-#          if request.method=='GET':
-#                user=get_object_or_404(User,user_id=request.user.id)
-#                serializer = EmployeeGetSerializer(user,many=True)
-#                return Response(serializer.data['admintranslates'])
-#             #    serializer = EmployeeGetSerializer(queryset,many=True)
+class ShowServicesApi(ModelViewSet):
+       serializer_class=UserTransportationSerializer
+       permission_classes = [IsAuthenticated]
+       @action(detail=False,methods=['GET'])   
+       def myservice_view(self,request):
+         if request.method=='GET':
+               user=get_object_or_404(User,id=request.user.id)
+               serializer = UserTransportationSerializer(user)
+               return Response(serializer.data)
+            #    serializer = EmployeeGetSerializer(queryset,many=True)
                
          
         
