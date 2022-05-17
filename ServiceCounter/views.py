@@ -1,7 +1,11 @@
-from multiprocessing.dummy import active_children
+from audioop import reverse
+from logging import raiseExceptions
 from django.shortcuts import get_object_or_404
-from .models import AdminTransportation,RequestUser
-from .serializers import AdminTransportationSerializer,RequestUserSerializer
+from Register.models import User
+
+from ServiceCounter import admin
+from .models import AdminTransportation
+from .serializers import AdminTransportationSerializer, EmployeeGetSerializer
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
@@ -13,6 +17,8 @@ from rest_framework.response import Response
 
 
 from automation.permissions import IsCompanyOwner,IsEmployee
+
+from ServiceCounter import serializers
 # Create your views here.
 
 
@@ -50,33 +56,39 @@ class ServiceUpdatingSet(ModelViewSet):
           elif request.method == 'DELETE':
                 service.delete()
                 return Response(status=status.HTTP_200_OK)
-class RequestViewSet(ModelViewSet):
+
+class EmployeeReserve(ModelViewSet):
       
-     permission_classes = [IsAuthenticated,IsEmployee]
-     queryset =RequestUser.objects.all()
-     serializer_class=RequestUserSerializer
-     @action(detail=False,methods=['GET','POST'])    
-     def request_view_list(self,request):
-         if request.method=='GET':
-               queryset = RequestUser.objects.filter(user_id=request.user.id)
-               serializer = RequestUserSerializer(queryset,many=True)
-               return Response(serializer.data)
-         elif request.method=='POST':
-               location = RequestUser.objects.create(user_id=request.user.id,user=request.user)
-               serializer = RequestUserSerializer(location, data=request.data)
-               serializer.is_valid(raise_exception=True)
-               serializer.save()
-               return Response(serializer.data)
-         
-class Get_Request_Admin_ViewSet(ModelViewSet):
-      
-     permission_classes = [IsAuthenticated,IsCompanyOwner]
-     queryset =RequestUser.objects.all()
-     serializer_class=RequestUserSerializer
+     permission_classes=[IsAuthenticated,IsEmployee]
+     queryset =AdminTransportation.objects.all()
+     serializer_class=EmployeeGetSerializer
      @action(detail=False,methods=['GET'])    
-     def request_admin_view_list(self,request):
-         if request.method=='GET':
-               queryset = RequestUser.objects.filter(user_company=request.user.company)
-               serializer = RequestUserSerializer(queryset,many=True)
+     def getlist_view(self,request):
+               queryset = AdminTransportation.objects.filter(admin__company=request.user.company)
+               serializer = EmployeeGetSerializer(queryset,many=True)
                return Response(serializer.data)
+     @action(detail=False,methods=['PATCH'])   
+     def reserve_view(self,request,id):
+         if request.method=='PATCH':
+               reserve = get_object_or_404(AdminTransportation,id=id)
+               reserve.user.add(request.user.id)
+               if reserve.maximum_capacity>0:
+                   reserve.maximum_capacity-=1
+               else:
+                     return Response(status="Capacity is complete!")
+            #    if int(reserve.user.get(request.user.id))!=None:
+            #           return Response(status="waht the fuck")
+                     
+               reserve.save()
+               return Response(status=status.HTTP_200_OK)
+            #    serializer = EmployeeGetSerializer(queryset,many=True)
+#      @action(detail=False,methods=['GET'])   
+#      def reserve_view(self,request):
+#          if request.method=='GET':
+#                user=get_object_or_404(User,user_id=request.user.id)
+#                serializer = EmployeeGetSerializer(user,many=True)
+#                return Response(serializer.data['admintranslates'])
+#             #    serializer = EmployeeGetSerializer(queryset,many=True)
+               
+         
         

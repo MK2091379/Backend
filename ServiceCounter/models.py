@@ -1,8 +1,4 @@
-from calendar import WEDNESDAY
-from urllib import response
-import defusedxml
 from django.db import models
-from requests import Response
 from Register.models import User
 from location_field.models.plain import PlainLocationField
 
@@ -17,7 +13,8 @@ class AdminTransportation(models.Model):
     location = PlainLocationField(based_fields=['address_search'], zoom=7,null=True)
     arrival_time=models.TimeField(null=True)
     Return_time=models.TimeField(null=True)
-    admin=models.ForeignKey(User , on_delete=models.CASCADE,null=True)
+    admin=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user=models.ManyToManyField(User,related_name='admintranslates')
     last_update=models.DateTimeField( auto_now=True)
     creation_time=models.DateTimeField( auto_now_add=True)
 # Create your models here.
@@ -30,25 +27,25 @@ class AdminTransportation(models.Model):
     thursday=models.BooleanField(default=False)
     friday=models.BooleanField(default=False)
     
-class ResponseApi(models.Model):
+# class ResponseApi(models.Model):
     
-    Response=models.TextField()
-    admin=models.ForeignKey(User,on_delete=models.CASCADE)
+#     Response=models.TextField()
+#     admin=models.ForeignKey(User,on_delete=models.CASCADE)
     
-class RequestUser(models.Model):
+# class RequestUser(models.Model):
     
-    Services=[
+#     Services=[
     
-        ("E","Etc"),
-        ("T","Transportation"),
-    ]
+#         ("E","Etc"),
+#         ("T","Transportation"),
+#     ]
     
     
-    request=models.TextField()
-    type_of_service=models.CharField(max_length=2,choices=Services,default='E')
-    creation_time=models.DateTimeField( auto_now_add=True)
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    response=models.ForeignKey(ResponseApi,on_delete=models.SET_NULL,null=True)
+#     request=models.TextField()
+#     type_of_service=models.CharField(max_length=2,choices=Services,default='E')
+#     creation_time=models.DateTimeField( auto_now_add=True)
+#     user=models.ForeignKey(User,on_delete=models.CASCADE)
+#     response=models.ForeignKey(ResponseApi,on_delete=models.SET_NULL,null=True)
     
 
     
