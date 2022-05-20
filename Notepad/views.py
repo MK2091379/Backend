@@ -1,23 +1,31 @@
 from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import NoteSerializers
+from .serializers import NoteBasicSerializer,NoteFileSerializer,NoteDetailsSerializer
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import action
+from rest_framework.views import APIView
 from .models import Note
 
-class FileView(ModelViewSet):
+class AddFileView(APIView):
+    def post(self, request, *args, **kwargs):
+        
+        notepost = Note.objects.create(user_id=request.user.id)
+        note_serializer = NoteBasicSerializer(notepost,data=self.request.data)
+        if note_serializer.is_valid():
+            _note = note_serializer.save()
+            for file in self.request.FILES.getlist('files'):
+                note_file = NoteFileSerializer(
+                    data={
+                        'file': file,
+                        'note': _note.id
+                        
+                    }
+                )
+                if note_file.is_valid():
+                    note_file.save()
+                else:
+                    return Response(note_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(note_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-  serializer_class =NoteSerializers
-  queryset=Note.objects.all()
-  parser_classes = (MultiPartParser, FormParser)
-  action(detail=False , methods=['POST'])
-  def note_view(self, request):
-    file = list( request.FILES.values())
-    file_serializer = NoteSerializers(data={"file":file})
-    if file_serializer.is_valid():
-      file_serializer.save()
-      return Response(file_serializer.data, status=status.HTTP_201_CREATED)
-    else:
-      return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(NoteDetailsSerializer(_note).data, status=status.HTTP_201_CREATED)

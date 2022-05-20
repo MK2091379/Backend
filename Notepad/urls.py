@@ -7,5 +7,5 @@ from . import views
 urlpatterns = [
     
     
-    path('note/',views.FileView.as_view({'post':'note_view'})),
+    path('note/',views.AddFileView.as_view()),
 ]

@@ -1,12 +1,10 @@
-from dataclasses import field
-from pyexpat import model
 from .models import Note,Files
 from rest_framework import serializers
 
 
 
 
-class NoteSerializers(serializers.ModelSerializer):
+class NoteBasicSerializer(serializers.ModelSerializer):
     class Meta:
         model=Note
         fields="__all__"
@@ -17,10 +15,10 @@ class NoteSingleFileSerializer(serializers.ModelSerializer):
         fields = ['file']
         
 class NoteDetailsSerializer(serializers.ModelSerializer):
-    carimage_set=NoteSingleFileSerializer(many=True)
+    files_set=NoteSingleFileSerializer(many=True)
     class Meta:
         model = Note
-        fields = ['title','text','files_set']
+        fields = ['id','user','title','text','files_set']
 
 class NoteFileSerializer(serializers.ModelSerializer):
     class Meta:
