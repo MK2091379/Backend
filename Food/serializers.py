@@ -7,6 +7,7 @@ from .models import Food
 class FoodSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(read_only=True)
     id = serializers.IntegerField(read_only = True)
+    company = serializers.CharField(read_only = True)
     class Meta:
         model = Food
-        fields = ['id','date', 'name', 'amount', 'user_id']
+        fields = ['id','date', 'name', 'amount','company','user_id']
