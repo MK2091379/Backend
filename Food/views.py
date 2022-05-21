@@ -1,7 +1,10 @@
 from unicodedata import name
 from django.shortcuts import render
+from pkg_resources import declare_namespace
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from urllib import request, response
+
+from Register.models import Company
 from .models import Food
 from .serializers import FoodSerializer
 from rest_framework.decorators import api_view,action
@@ -13,39 +16,80 @@ from rest_framework.permissions import IsAuthenticated
 
 
 
-class FoodViewSet(ModelViewSet):
+class FoodViewSetManager(ModelViewSet):
+    #user,name,date,amount,company
     permission_classes = [IsAuthenticated]
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
     @action(detail=False, methods=['GET'])
     def get_food_manager(self, request):
         if request.method == 'GET':
-            food = Food.objects.filter(pk = request.user.pk)
+            food = Food.objects.filter(user_id = request.user.id)
             serializer = FoodSerializer(food,many=True)
             return Response(serializer.data)
     @action(detail=False, methods=['POST'])
     def post_food(self,request):
         if request.method == 'POST':
             food = Food.objects.create(user_id = request.user.id)
-            #food.company.add(request.user.company.company_name)
             serializer = FoodSerializer(food, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
     @action(detail=False, methods=['PUT'])
-    def put_food(self,request):
+    def put_food(self,request,name,date):
         if request.method == 'PUT':
-            food = Food.objects.get(user_id = request.user.id)
+            food = Food.objects.get(name=name,date=date,user_id = request.user.id)
             serializer = FoodSerializer(food, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
     @action(detail=False, methods=['DELETE'])
-    def delete_food(self,request,name):
+    def delete_food(self,request,name,date):
         if request.method == 'DELETE':
-            Food.objects.get(name=name).delete()
+            Food.objects.get(name=name,date=date,user_id = request.user.id).delete()
             return Response("OK")
+    #################################################################################################
+    #def get_reserved_food_manager(self, request,company):
+    #    if request.method == 'GET':
+    #        food = Food.objects.filter(user_id = request.user.id,company = company)
+    #        serializer = FoodSerializer(food,many=True)
+    #        return Response(serializer.data)
+    @action(detail=False, methods=['GET'])
+    def reserve_food_manager(self,request,name,date,company):
+        if request.method == 'GET':
+            food = Food.objects.get(name=name,company=company,date=date)
+            food.amount-=1
+            food.save()
             #serializer = FoodSerializer(food, data=request.data)
             #serializer.is_valid(raise_exception=True)
             #serializer.save()
-            #return Response(serializer.data)
+            return Response("OK")
+    @action(detail=False, methods=['DELETE'])
+    def delete_reserved_food_manager(self,request,name,date,company):
+        if request.method == 'DELETE':
+            Food.objects.get(name=name,date=date,company = company,user_id = request.user.id).delete()
+            return Response("OK")
+class FoodViewSetEmployee(ModelViewSet):
+    #user,name,date,amount,company
+    permission_classes = [IsAuthenticated]
+    queryset = Food.objects.all()
+    serializer_class = FoodSerializer
+    #@action(detail=False, methods=['GET'])
+    #def get_reserved_food_employee(self, request):
+    #    if request.method == 'GET':
+    #        food = Food.objects.filter(user_id = request.user.id)
+    #        serializer = FoodSerializer(food,many=True)
+    #        return Response(serializer.data)
+    @action(detail=False, methods=['POST'])
+    def reserve_food_employee(self,request,name,date,company):
+        if request.method == 'POST':
+            food = Food.objects.create(user_id = request.user.id)
+            serializer = FoodSerializer(food, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+    @action(detail=False, methods=['DELETE'])
+    def delete_reserved_food_employee(self,request,name,date,company):
+        if request.method == 'DELETE':
+            Food.objects.get(name=name,date=date,company = company,user_id = request.user.id).delete()
+            return Response("OK")
