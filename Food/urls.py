@@ -11,9 +11,9 @@ urlpatterns=[
     ###########################################################################################################################
     #path('get_reserved_food_manager',views.FoodViewSetManager.as_view({'get':'get_reserved_food_manager'})),
     path('reserve_food_manager/<str:name>/<str:company>/<str:date>',views.FoodViewSetManager.as_view({'get':'reserve_food_manager'})),
-    path('delete_reserved_food_manager',views.FoodViewSetManager.as_view({'delete':'delete_reserved_food_manager'})),
+    path('delete_reserved_food_manager/<str:name>/<str:company>/<str:date>',views.FoodViewSetManager.as_view({'get':'delete_reserved_food_manager'})),
     #######################################################################################################################
-    path('get_reserved_food_employee',views.FoodViewSetEmployee.as_view({'get':'get_reserved_food_employee'})),
-    path('reserve_food_employee',views.FoodViewSetEmployee.as_view({'post':'reserve_food_employee'})),
-    path('delete_reserved_food_employee',views.FoodViewSetEmployee.as_view({'delete':'delete_reserved_food_employee'})),
+    #path('get_reserved_food_employee',views.FoodViewSetEmployee.as_view({'get':'get_reserved_food_employee'})),
+    path('reserve_food_employee/<str:name>/<str:company>/<str:date>',views.FoodViewSetEmployee.as_view({'get':'reserve_food_employee'})),
+    path('delete_reserved_food_employee/<str:name>/<str:company>/<str:date>',views.FoodViewSetEmployee.as_view({'get':'delete_reserved_food_employee'})),
 ]

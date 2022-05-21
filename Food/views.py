@@ -60,36 +60,30 @@ class FoodViewSetManager(ModelViewSet):
             food = Food.objects.get(name=name,company=company,date=date)
             food.amount-=1
             food.save()
-            #serializer = FoodSerializer(food, data=request.data)
-            #serializer.is_valid(raise_exception=True)
-            #serializer.save()
             return Response("OK")
-    @action(detail=False, methods=['DELETE'])
+    @action(detail=False, methods=['GET'])
     def delete_reserved_food_manager(self,request,name,date,company):
-        if request.method == 'DELETE':
-            Food.objects.get(name=name,date=date,company = company,user_id = request.user.id).delete()
+        if request.method == 'GET':
+            food = Food.objects.get(name=name,company=company,date=date)
+            food.amount+=1
+            food.save()
             return Response("OK")
 class FoodViewSetEmployee(ModelViewSet):
     #user,name,date,amount,company
     permission_classes = [IsAuthenticated]
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
-    #@action(detail=False, methods=['GET'])
-    #def get_reserved_food_employee(self, request):
-    #    if request.method == 'GET':
-    #        food = Food.objects.filter(user_id = request.user.id)
-    #        serializer = FoodSerializer(food,many=True)
-    #        return Response(serializer.data)
     @action(detail=False, methods=['POST'])
     def reserve_food_employee(self,request,name,date,company):
-        if request.method == 'POST':
-            food = Food.objects.create(user_id = request.user.id)
-            serializer = FoodSerializer(food, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-    @action(detail=False, methods=['DELETE'])
+        if request.method == 'GET':
+            food = Food.objects.get(name=name,company=company,date=date)
+            food.amount-=1
+            food.save()
+            return Response("OK")
+    @action(detail=False, methods=['GET'])
     def delete_reserved_food_employee(self,request,name,date,company):
-        if request.method == 'DELETE':
-            Food.objects.get(name=name,date=date,company = company,user_id = request.user.id).delete()
+        if request.method == 'GET':
+            food = Food.objects.get(name=name,company=company,date=date)
+            food.amount+=1
+            food.save()
             return Response("OK")
