@@ -3,8 +3,7 @@ from pyexpat import model
 from rest_framework import serializers
 from .models import AdminTransportation
 from Register.models import User
-
-
+from Register.serializers import EmployeeSerializer
 class AdminTransportationSerializer(serializers.ModelSerializer):  
     
     class Meta:
@@ -16,6 +15,9 @@ class AdminTransportationSerializer(serializers.ModelSerializer):
         
         read_only_fields = ['id']
 class EmployeeGetSerializer(serializers.ModelSerializer):
+    
+    
+    user=EmployeeSerializer(many=True)
     class Meta:
         model=AdminTransportation
         fields=['id','address','maximum_capacity',
@@ -30,6 +32,7 @@ class EmployeeGetSerializer(serializers.ModelSerializer):
                                'Return_time': {'read_only': True},
                                }
 class UserTransportationSerializer(serializers.ModelSerializer):
+        admintranslates=AdminTransportationSerializer(many=True)
         class Meta:
                 model=User
                 fields=['admintranslates']

@@ -1,15 +1,11 @@
-from audioop import reverse
-from logging import raiseExceptions
 from django.shortcuts import get_object_or_404
 from Register.models import User
-
-from ServiceCounter import admin
 from .models import AdminTransportation
 from .serializers import AdminTransportationSerializer, EmployeeGetSerializer,UserTransportationSerializer
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view,action
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
@@ -84,7 +80,7 @@ class EmployeeReserve(ModelViewSet):
             #    serializer = EmployeeGetSerializer(queryset,many=True)
 class ShowServicesApi(ModelViewSet):
        serializer_class=UserTransportationSerializer
-       permission_classes = [IsAuthenticated]
+       permission_classes = [IsAuthenticated,IsEmployee]
        @action(detail=False,methods=['GET'])   
        def myservice_view(self,request):
          if request.method=='GET':

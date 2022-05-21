@@ -1,10 +1,14 @@
 from dataclasses import field
+from statistics import mode
 from rest_framework import serializers
 from .models import User,Company
 from djoser.serializers import UserSerializer as BaseUserSerializer
 
 
-
+class GetRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=['role']
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model=Company
@@ -15,7 +19,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     role=serializers.CharField(read_only=True)
     class Meta:
         model=User
-        fields=['first_name','last_name','username','email','company','role','password']
+        fields=['first_name','last_name','username','email','company','role']
     
     def create(self, validated_data):
         user = User.objects.create(
@@ -50,7 +54,7 @@ class CompnyOwnerSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=User
-        fields=['company','first_name','last_name','username','email','role','password']
+        fields=['company','first_name','last_name','username','email','role']
         
         
         
