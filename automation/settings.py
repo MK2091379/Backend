@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'ServiceCounter',
     'HRdesk',
     'BulletinBoard',
+    'Salary',
 
     #tools
     'django.contrib.admin',
