@@ -64,4 +64,6 @@ urlpatterns = [
     path('todolist/',include('ToDoList.urls')),
     #Transportation
     path('ServiceCounter/',include('ServiceCounter.urls')),
+    #Salary
+    path('Salary/',include('Salary.urls')),
 ]
