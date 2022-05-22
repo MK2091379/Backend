@@ -2,7 +2,7 @@ from rest_framework import serializers
 from Register.models import Company,User
 from .models import Dormitory
 
-class FoodSerializer(serializers.ModelSerializer):
+class DormitorySerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(read_only=True)
     id = serializers.IntegerField(read_only = True)
     class Meta:
