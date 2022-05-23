@@ -12,4 +12,4 @@ class FoodSerializer(serializers.ModelSerializer):
     #company = serializers.CharField(read_only = True)
     class Meta:
         model = Food
-        fields = ['user_id','id','date', 'name', 'amount','company']
+        fields = ['user_id','id','date', 'name', 'amount','company','price']
