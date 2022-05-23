@@ -12,3 +12,4 @@ class Food(models.Model):
     name = models.TextField(null=True,blank = True)
     amount = models.IntegerField(null=True,blank = True)
     company = models.CharField(max_length=200,null=True,blank=True)
+    price = models.DecimalField(null=True,blank=True,max_digits=5,decimal_places=0)
