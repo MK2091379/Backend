@@ -72,6 +72,9 @@ INSTALLED_APPS = [
     #map
     'location_field.apps.DefaultConfig'
     
+    #map
+    'location_field.apps.DefaultConfig'
+    
  
     
 
@@ -229,6 +232,11 @@ DJOSER={
 
         }
 
+}
+LOCATION_FIELD = {
+    'map.provider': 'openstreetmap',
+    'search.provider': 'nominatim',
+    'provider.openstreetmap.max_zoom': 18,
 }
 LOCATION_FIELD = {
     'map.provider': 'openstreetmap',

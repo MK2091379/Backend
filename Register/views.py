@@ -1,7 +1,14 @@
 #from django.shortcuts import render
-from rest_framework import generics,permissions
+from django.conf import UserSettingsHolder
+from requests import request
+from rest_framework import generics,permissions,status
 from .models import Company, User
+from rest_framework.viewsets import ModelViewSet
 from .serializers import  EmployeeSerializer,CompnyOwnerSerializer,CompanySerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 #from rest_framework.response import Response
 #from rest_framework.views import APIView
 
@@ -24,6 +31,15 @@ class CompanyOwnerView(generics.ListCreateAPIView):
     queryset=User.objects.all()
     serializer_class=CompnyOwnerSerializer
     permissions.IsAuthenticatedOrReadOnly
+    
+class GetmyRole(ModelViewSet):
+    permission_classes=[IsAuthenticated]
+    queryset=User.objects.all()
+    @action(detail=False,methods=['GET'])
+    def getrole(self,request):
+        user=User.objects.get(id=request.user.id)
+        return Response(user.role)
+
     
 
     # def get(self,format=None):
