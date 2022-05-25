@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'HRdesk',
     'BulletinBoard',
     'Notepad',
+    'Food',
 
     #tools
     'django.contrib.admin',
@@ -70,6 +71,9 @@ INSTALLED_APPS = [
 
     #map
     'location_field.apps.DefaultConfig'
+    
+ 
+    
 
 
 
