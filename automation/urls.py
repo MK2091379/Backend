@@ -21,7 +21,8 @@ from rest_framework_simplejwt import views as jwt_views
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-
+from . import settings
+from django.conf.urls.static import static
 
 
 
@@ -64,4 +65,12 @@ urlpatterns = [
     path('todolist/',include('ToDoList.urls')),
     #Transportation
     path('ServiceCounter/',include('ServiceCounter.urls')),
+    #Notepad
+    path('notepad/',include('Notepad.urls')),
 ]
+
+
+
+
+if settings.DEBUG:
+  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
