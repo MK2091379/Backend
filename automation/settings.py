@@ -72,8 +72,7 @@ INSTALLED_APPS = [
     #map
     'location_field.apps.DefaultConfig'
     
-    #map
-    'location_field.apps.DefaultConfig'
+
     
  
     

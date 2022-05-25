@@ -1,16 +1,9 @@
-<<<<<<< HEAD
-from rest_framework import serializers
-from .models import AdminTransportation,RequestUser
-
-
-=======
 from dataclasses import field
 from pyexpat import model
 from rest_framework import serializers
 from .models import AdminTransportation
 from Register.models import User
 from Register.serializers import EmployeeSerializer
->>>>>>> transportation
 class AdminTransportationSerializer(serializers.ModelSerializer):  
     
     class Meta:
@@ -18,22 +11,6 @@ class AdminTransportationSerializer(serializers.ModelSerializer):
         fields=['id','address',
                 'maximum_capacity','details',
                  'address_search','location',
-<<<<<<< HEAD
-                'arrival_time','Return_time','saturday','sunday','monday','tuesday','wednesday','thursday','friday']
-        
-        read_only_fields = ['id']
-
-class RequestUserSerializer(serializers.ModelSerializer):  
-    
-    class Meta:
-        model=RequestUser
-        fields=['id','request','type_of_service']
-        read_only_fields = ['id']
-
-
-class ResponseApiSerializer(serializers.ModelSerializer):
-    pass
-=======
                 'arrival_time','Return_time']
         
         read_only_fields = ['id']
@@ -89,4 +66,3 @@ class UserTransportationSerializer(serializers.ModelSerializer):
 
 # class ResponseApiSerializer(serializers.ModelSerializer):
 #     pass
->>>>>>> transportation
