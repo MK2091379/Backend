@@ -4,7 +4,7 @@ from requests import request
 from rest_framework import generics,permissions,status
 from .models import Company, User
 from rest_framework.viewsets import ModelViewSet
-from .serializers import  EmployeeSerializer,CompnyOwnerSerializer,CompanySerializer
+from .serializers import  EmployeeSerializer,CompnyOwnerSerializer,CompanySerializer,CompanyGetSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -39,6 +39,14 @@ class GetmyRole(ModelViewSet):
     def getrole(self,request):
         user=User.objects.get(id=request.user.id)
         return Response(user.role)
+class GetAllCompany(ModelViewSet):
+    permission_classes=[IsAuthenticated]
+    queryset=Company.objects.all()
+    @action(detail=False,methods=['GET'])
+    def getcompany(self,request):
+        queryset=Company.objects.all()
+        serializer = CompanyGetSerializer(queryset,many=True)
+        return Response(serializer.data)
 
     
 

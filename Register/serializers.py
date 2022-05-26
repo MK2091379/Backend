@@ -82,3 +82,8 @@ class CompnyOwnerSerializer(serializers.ModelSerializer):
             #  phone=validated_data['phone'],
             #  email=validated_data['email'],
             #  role='C' 
+            
+    class CompanyGetSerializer(serializers.ModelSerializer):
+        class Meta:
+            model=Company
+            fields=['company_name']
