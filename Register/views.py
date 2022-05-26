@@ -40,7 +40,6 @@ class GetmyRole(ModelViewSet):
         user=User.objects.get(id=request.user.id)
         return Response(user.role)
 class GetAllCompany(ModelViewSet):
-    permission_classes=[IsAuthenticated]
     queryset=Company.objects.all()
     @action(detail=False,methods=['GET'])
     def getcompany(self,request):
