@@ -12,7 +12,7 @@ class NoteBasicSerializer(serializers.ModelSerializer):
 class NoteSingleFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Files
-        fields = ['file']
+        fields = ['id', 'file']
         
 class NoteDetailsSerializer(serializers.ModelSerializer):
     files_set=NoteSingleFileSerializer(many=True)

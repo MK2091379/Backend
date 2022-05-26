@@ -1,4 +1,3 @@
-from msilib.schema import File
 from django.contrib import admin
 
 from Notepad.models import Note,Files
