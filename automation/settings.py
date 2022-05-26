@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'ServiceCounter',
     'HRdesk',
     'BulletinBoard',
+    'Notepad',
+    'Food',
 
     #tools
     'django.contrib.admin',
@@ -69,11 +71,19 @@ INSTALLED_APPS = [
 
     #map
     'location_field.apps.DefaultConfig'
+<<<<<<< HEAD
 
 
 
 
 
+=======
+    
+
+    
+ 
+    
+>>>>>>> fd423b21a1b95e28772ced5094cae39f01adc82c
 
 
 
@@ -177,6 +187,9 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 
 
+#add file
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -232,5 +245,16 @@ LOCATION_FIELD = {
     'search.provider': 'nominatim',
     'provider.openstreetmap.max_zoom': 18,
 }
+LOCATION_FIELD = {
+    'map.provider': 'openstreetmap',
+    'search.provider': 'nominatim',
+    'provider.openstreetmap.max_zoom': 18,
+}
 
 
+<<<<<<< HEAD
+=======
+        
+
+
+>>>>>>> fd423b21a1b95e28772ced5094cae39f01adc82c

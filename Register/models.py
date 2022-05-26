@@ -1,8 +1,8 @@
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
-
 
 
 
@@ -47,7 +47,7 @@ class User(AbstractUser):
     
     
     #regex for phone iranian phone number 
-    valid_number=[RegexValidator(regex='09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}')]
+    valid_number=[RegexValidator(regex='09(0[1-2])|(1[0-9])|(3[0-9])|(2[0-1])-?[0-9]{3}-?[0-9]{4}')]
     
     first_name=models.CharField(_('first name'),max_length=60)
     last_name=models.CharField(_('last name'),max_length=60)
@@ -65,8 +65,7 @@ class User(AbstractUser):
     telephone = models.CharField(max_length=11,validators=[RegexValidator(regex='^0[0-9]{2,}[0-9]{7,}$')],null=True)
     maritalـstatus = models.CharField(max_length=1,choices=maritalـstatus_choises,default="S")
     degreeـofـeducation = models.CharField(max_length=1,choices=degreeـofـeducationـchoises,default="O")
-    check_transportation=models.BooleanField(default=False)
-   
+    
   
 
     
