@@ -25,7 +25,7 @@ class AddFileView(APIView):
                 )
                 note_file.is_valid(raise_exception=True)
                 note_file.save()
-               
+        return Response(status=status.HTTP_200_OK)
         
 
         
@@ -42,7 +42,7 @@ class FileQuery(ModelViewSet):
     
     @action(detail=False, method=['DELETE'])
     def delete_file(self,request,id):
-        getfile=get_object_or_404(Files,id=id,user_id=request.user.id)
+        getfile=get_object_or_404(Files,id=id,note__user_id=request.user.id)
         getfile.delete()
         return Response(status=status.HTTP_200_OK) 
     

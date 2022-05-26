@@ -11,7 +11,9 @@ class AdminTransportationSerializer(serializers.ModelSerializer):
         fields=['id','address',
                 'maximum_capacity','details',
                  'address_search','location',
-                'arrival_time','Return_time']
+                'arrival_time','Return_time',
+                'saturday', 'sunday', 'monday', 'tuesday',
+                'wednesday', 'thursday', 'friday']
         
         read_only_fields = ['id']
 class EmployeeGetSerializer(serializers.ModelSerializer):
@@ -22,7 +24,9 @@ class EmployeeGetSerializer(serializers.ModelSerializer):
         model=AdminTransportation
         fields=['id','address','maximum_capacity',
                 'details','arrival_time',
-                'Return_time','user']
+                'Return_time','user',
+                'saturday', 'sunday', 'monday', 'tuesday',
+                'wednesday', 'thursday', 'friday']
         
         extra_kwargs = {       'id': {'read_only': True},
                                'address': {'read_only': True},

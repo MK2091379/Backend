@@ -19,7 +19,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     role=serializers.CharField(read_only=True)
     class Meta:
         model=User
-        fields=['first_name','last_name','username','email','company','role']
+        fields=['first_name','last_name','username','email','company','role','password']
     
     def create(self, validated_data):
         user = User.objects.create(
@@ -54,7 +54,7 @@ class CompnyOwnerSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=User
-        fields=['company','first_name','last_name','username','email','role']
+        fields=['company','first_name','last_name','username','email','role','password']
         
         
         

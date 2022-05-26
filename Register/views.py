@@ -39,6 +39,7 @@ class GetmyRole(ModelViewSet):
     def getrole(self,request):
         user=User.objects.get(id=request.user.id)
         return Response(user.role)
+        
 class GetAllCompany(ModelViewSet):
     queryset=Company.objects.all()
     @action(detail=False,methods=['GET'])

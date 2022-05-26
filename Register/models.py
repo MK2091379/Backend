@@ -47,7 +47,7 @@ class User(AbstractUser):
     
     
     #regex for phone iranian phone number 
-    valid_number=[RegexValidator(regex='09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}')]
+    valid_number=[RegexValidator(regex='09(0[1-2])|(1[0-9])|(3[0-9])|(2[0-1])-?[0-9]{3}-?[0-9]{4}')]
     
     first_name=models.CharField(_('first name'),max_length=60)
     last_name=models.CharField(_('last name'),max_length=60)
