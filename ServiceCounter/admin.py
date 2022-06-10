@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import AdminTransportation,RequestUser
+from .models import AdminTransportation
 
 admin.site.register(AdminTransportation)
-admin.site.register(RequestUser)
 # Register your models here.

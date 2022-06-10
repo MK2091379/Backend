@@ -1,10 +1,14 @@
 from dataclasses import field
+from statistics import mode
 from rest_framework import serializers
 from .models import User,Company
 from djoser.serializers import UserSerializer as BaseUserSerializer
 
 
-
+class GetRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=['role']
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model=Company
@@ -78,3 +82,8 @@ class CompnyOwnerSerializer(serializers.ModelSerializer):
             #  phone=validated_data['phone'],
             #  email=validated_data['email'],
             #  role='C' 
+            
+class CompanyGetSerializer(serializers.ModelSerializer):
+        class Meta:
+            model=Company
+            fields=['company_name']
