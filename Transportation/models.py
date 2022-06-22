@@ -3,8 +3,6 @@ from Register.models import User
 from location_field.models.plain import PlainLocationField
 
 
-
-
 class AdminTransportation(models.Model):
     address= models.TextField()
     maximum_capacity=models.PositiveIntegerField(null=True)
@@ -17,6 +15,7 @@ class AdminTransportation(models.Model):
     user=models.ManyToManyField(User,related_name='admintranslates')
     last_update=models.DateTimeField( auto_now=True)
     creation_time=models.DateTimeField( auto_now_add=True)
+    monthly_price=models.DecimalField(max_digits=5,decimal_places=2,default=0)
 # Create your models here.
     ##days
     saturday=models.BooleanField(default=False)
@@ -46,8 +45,3 @@ class AdminTransportation(models.Model):
 #     creation_time=models.DateTimeField( auto_now_add=True)
 #     user=models.ForeignKey(User,on_delete=models.CASCADE)
 #     response=models.ForeignKey(ResponseApi,on_delete=models.SET_NULL,null=True)
-    
-
-    
-    
-

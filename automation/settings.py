@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'Register',
     'TimeAndDateTracker',
     'ToDoList',
-    'ServiceCounter',
+    'Transportation',
     'HRdesk',
     'BulletinBoard',
     'Salary',

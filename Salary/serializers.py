@@ -1,19 +1,43 @@
+from dataclasses import fields
 from pyexpat import model
+from statistics import mode
 from rest_framework import serializers
 from .models import EmployeeSalary
 from Register.models import User 
+from TimeAndDateTracker.models import TimeAndDateTracker
+from Transportation.models import AdminTransportation
+from Transportation.serializers import PriceTransportationSerializer
 
 
 
+
+
+
+        
+        
+    
+            
+class UserPrices(serializers.ModelSerializer):
+        admintranslates=PriceTransportationSerializer(many=True)
+        class Meta:
+                model=User
+                fields=['admintranslates']
+                
 class AddEmployeeSalarySerializer(serializers.ModelSerializer):
-    
-    
     
     class Meta:
         
-        
         model=EmployeeSalary
-        fields=['id','salary_hours','price_food','price_transportatio','price_dormitory']
+        fields=['id','employee','monthly_salary','reward_benefit','min_working',]
         read_only_fields=['id']
         
+class ShowMySalarySeriializer(serializers.ModelSerializer):
+    
+
+    class Meta:
+        model=EmployeeSalary
+        fields=['monthly_salary']
+        read_only_fields=['monthly_salary']
         
+ 
+    

@@ -8,11 +8,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-
 from automation.permissions import IsCompanyOwner, IsEmployee
 
-from ServiceCounter import serializers
-# Create your views here.
+from Transportation import serializers
 
 
 class AdminTransportationViewSet(ModelViewSet):
@@ -94,6 +92,7 @@ class EmployeeReserve(ModelViewSet):
 			reserve.save()
 			return Response(status=status.HTTP_200_OK)
     
+    
 class ShowServicesApi(ModelViewSet):
        serializer_class=UserTransportationSerializer
        permission_classes = [IsAuthenticated]
@@ -104,6 +103,3 @@ class ShowServicesApi(ModelViewSet):
                serializer = UserTransportationSerializer(user)
                return Response(serializer.data)
             #    serializer = EmployeeGetSerializer(queryset,many=True)
-               
-         
-        

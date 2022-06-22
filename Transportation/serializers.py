@@ -1,9 +1,9 @@
-from dataclasses import field
-from pyexpat import model
 from rest_framework import serializers
 from .models import AdminTransportation
 from Register.models import User
 from Register.serializers import EmployeeSerializer
+
+
 class AdminTransportationSerializer(serializers.ModelSerializer):  
     
     class Meta:
@@ -13,12 +13,12 @@ class AdminTransportationSerializer(serializers.ModelSerializer):
                  'address_search','location',
                 'arrival_time','Return_time',
                 'saturday', 'sunday', 'monday', 'tuesday',
-                'wednesday', 'thursday', 'friday']
+                'wednesday', 'thursday', 'friday','monthly_price']
         
         read_only_fields = ['id']
+        
+        
 class EmployeeGetSerializer(serializers.ModelSerializer):
-    
-    
     user=EmployeeSerializer(many=True)
     class Meta:
         model=AdminTransportation
@@ -26,7 +26,7 @@ class EmployeeGetSerializer(serializers.ModelSerializer):
                 'details','arrival_time',
                 'Return_time','user',
                 'saturday', 'sunday', 'monday', 'tuesday',
-                'wednesday', 'thursday', 'friday']
+                'wednesday', 'thursday', 'friday','monthly_price']
         
         extra_kwargs = {       'id': {'read_only': True},
                                'address': {'read_only': True},
@@ -34,13 +34,23 @@ class EmployeeGetSerializer(serializers.ModelSerializer):
                                'details': {'read_only': True},
                                'arrival_time': {'read_only': True},
                                'Return_time': {'read_only': True},
+                               'monthly_price': {'read_only': True},
+
                                }
+
+
 class UserTransportationSerializer(serializers.ModelSerializer):
         admintranslates=AdminTransportationSerializer(many=True)
         class Meta:
                 model=User
                 fields=['admintranslates']
+ 
                 
+class PriceTransportationSerializer(serializers.ModelSerializer):
+        class Meta:
+            model=AdminTransportation
+            fields=['monthly_price']
+            read_only_fields=['monthly_price']
                 
 
 # class EmployeeGetServicesSerializer(serializers.ModelSerializer):

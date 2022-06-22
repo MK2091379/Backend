@@ -9,6 +9,8 @@ class GetRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=['role']
+        
+        
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model=Company
@@ -87,3 +89,5 @@ class CompanyGetSerializer(serializers.ModelSerializer):
         class Meta:
             model=Company
             fields=['company_name']
+            
+
