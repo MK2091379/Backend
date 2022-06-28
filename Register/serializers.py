@@ -37,6 +37,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
         
         user.set_password(validated_data['password'])
+        user.add_salary()
         user.save()
         return user
         

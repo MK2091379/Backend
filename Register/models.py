@@ -1,8 +1,8 @@
-from statistics import mode
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
+from Salary.models import EmployeeSalary 
+from django.db import models
 
 
 
@@ -66,7 +66,13 @@ class User(AbstractUser):
     maritalـstatus = models.CharField(max_length=1,choices=maritalـstatus_choises,default="S")
     degreeـofـeducation = models.CharField(max_length=1,choices=degreeـofـeducationـchoises,default="O")
     
-  
+    def add_salary(self):
+        
+            user=User.objects.get(id=self.id)
+            add_obj_salary=EmployeeSalary.objects.create(employee_id=user.id,monthly_salary=0.0,reward_benefit=0.0,min_working=0.0)
+          
+            
+        
 
     
 
