@@ -20,9 +20,7 @@ class RequestForm(models.Model):
     title_form=models.CharField(max_length=150)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     status=models.CharField(max_length=1,choices=status_choice,default=pending_mode)
-    type_form= title=models.CharField(max_length=150)
-    value_form= title=models.TextField()
+    type_form=models.CharField(max_length=150)
+    value_form=models.TextField()
     
-    def __str__(self) -> str:
-        return self.title_form + self.status
-     
+  
