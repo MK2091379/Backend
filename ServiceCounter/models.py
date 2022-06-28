@@ -4,7 +4,7 @@ from Register.models import User
 # Create your models here.
 
 
-class Request(models.Model):
+class RequestForm(models.Model):
     
     pending_mode='P'
     declined_mode='D'
