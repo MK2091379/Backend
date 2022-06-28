@@ -38,14 +38,20 @@ class EmployeeServiceCounter(ModelViewSet):
     queryset=RequestForm.objects.all()
     
     
-    action(detail=False,methods=['POST'])
+    action(detail=False,methods=['POST','GET'])
     def send_reuqest(self,request):
-        requestinstance=RequestForm(user_id=request.user_id)
-        serializer = RequestSerializer(requestinstance, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        requestinstance.save()
-        serializer.save()
-        return Response(serializer.data)
+        
+        if request.method=='POST':
+            requestinstance=RequestForm(user_id=request.user_id)
+            serializer = RequestSerializer(requestinstance, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            requestinstance.save()
+            serializer.save()
+            return Response(serializer.data)
+        elif request.method=='GET':
+            listrequest=RequestForm.objects.filter(user_id=request.user_id)
+            serlializers=ResponseSerializer(listrequest,Many=True)
+            return Response(serlializers.data)
         
    
             
