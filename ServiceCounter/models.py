@@ -17,12 +17,12 @@ class RequestForm(models.Model):
     ]
 
     
-    title=models.CharField(max_length=150)
+    title_form=models.CharField(max_length=150)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     status=models.CharField(max_length=1,choices=status_choice,default=pending_mode)
     type_form= title=models.CharField(max_length=150)
     value_form= title=models.TextField()
     
     def __str__(self) -> str:
-        return self.title + self.status
+        return self.title_form + self.status
      
