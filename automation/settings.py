@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Salary',
     'Notepad',
     'Food',
+    'ServiceCounter',
 
     #tools
     'django.contrib.admin',
