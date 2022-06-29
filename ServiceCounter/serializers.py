@@ -1,33 +1,23 @@
 from rest_framework import serializers
-from . import models
-from Register.models import User
+from .models import *
 
 
-class UserServiceCounterSerializer(serializers.ModelSerializer):
 
-        class Meta:
-            model=User
-            fields=['email','last_name','first_name']
-            extra_kwargs = {       'email': {'read_only': True},
-                               'last_name': {'read_only': True},
-                               'first_name': {'read_only': True},
-                               }
 
 class RequestSerializer(serializers.ModelSerializer):
     
-    user=UserServiceCounterSerializer(many=True)
-    class Meta:
-        model=models.RequestForm
-        fields=['id','title_form','user','status','type_form','value_form']
-        read_only_fields=['id']
+        class Meta:
+            model=RequestForm
+            fields=['id','title_form','user','status','type_form','value_form']
+            read_only_fields=['id','status','user']
 
 class ResponseSerializer(serializers.ModelSerializer):
     
-    user=UserServiceCounterSerializer(many=True)
     class Meta:
-        model=models.RequestForm
-        fields=['title_form','user','status','type_form','value_form']
-        extra_kwargs = {       'id': {'read_only': True},
+        model=RequestForm
+        fields=['id','title_form','user','status','type_form','value_form']
+        
+        extra_kwargs = {      
                                'title_form': {'read_only': True},
                                'user': {'read_only': True},
                                'type_form': {'read_only': True},

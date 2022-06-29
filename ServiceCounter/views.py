@@ -1,6 +1,6 @@
 
 from rest_framework.decorators import action
-from django.shortcuts import get_list_or_404
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet 
@@ -16,18 +16,20 @@ class AdminServiceCounter(ModelViewSet):
     queryset=RequestForm.objects.all()
     
     
-    action(detail=False ,methods=['GET','PATCH'])
-    def response_and_show(self ,request,id):
-        if request.method=='GET':
-            listrequest=RequestForm.objects.filter(user_company=request.user.comoany,user_role='E',status='P')
-            serlializers=ResponseSerializer(listrequest,Many=True)
+    action(detail=False ,methods=['GET'])
+    def response_me(self ,request):
+            listrequest=RequestForm.objects.filter(user__company=request.user.company,status='P',user__role='E')
+            serlializers=ResponseSerializer(listrequest,many=True)
             return Response(serlializers.data)
-        elif request.method=="PATCH":
-            getrequest=get_list_or_404(RequestForm,pk=id)
-            serializer = RequestSerializer(getrequest, data=request.data)
+    action(detail=False ,methods=['PATCH'])
+    def __show_all_request__(self ,request,id):
+            getrequest=get_object_or_404(RequestForm,pk=id,user__company=request.user.company)
+            serializer = ResponseSerializer(getrequest, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data,status=status.HTTP_200_OK)
+     
+        
         
 class EmployeeServiceCounter(ModelViewSet):
     
@@ -39,15 +41,15 @@ class EmployeeServiceCounter(ModelViewSet):
     def send_reuqest(self,request):
         
         if request.method=='POST':
-            requestinstance=RequestForm(user_id=request.user_id)
+            requestinstance=RequestForm(user_id=request.user.id)
             serializer = RequestSerializer(requestinstance, data=request.data)
             serializer.is_valid(raise_exception=True)
             requestinstance.save()
             serializer.save()
             return Response(serializer.data)
         elif request.method=='GET':
-            listrequest=RequestForm.objects.filter(user_id=request.user_id)
-            serlializers=ResponseSerializer(listrequest,Many=True)
+            listrequest=RequestForm.objects.filter(user_id=request.user.id)
+            serlializers=ResponseSerializer(listrequest,many=True)
             return Response(serlializers.data)
         
    
