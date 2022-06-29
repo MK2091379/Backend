@@ -1,15 +1,12 @@
-from asyncio import FastChildWatcher
-from webbrowser import get
-from django import shortcuts
-import requests
+
 from rest_framework.decorators import action
 from django.shortcuts import get_list_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet 
 from rest_framework.permissions import IsAuthenticated
-from ServiceCounter import serlializers
-from  serlializers import *
+from ServiceCounter import serializers
+from  ServiceCounter.serializers import *
 from .models import *
 
 

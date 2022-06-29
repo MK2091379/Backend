@@ -1,19 +1,21 @@
-from curses import meta
-from dataclasses import field
 from rest_framework import serializers
 from . import models
 from Register.models import User
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserServiceCounterSerializer(serializers.ModelSerializer):
 
         class Meta:
             model=User
             fields=['email','last_name','first_name']
+            extra_kwargs = {       'email': {'read_only': True},
+                               'last_name': {'read_only': True},
+                               'first_name': {'read_only': True},
+                               }
 
 class RequestSerializer(serializers.ModelSerializer):
     
-    user=UserSerializer(many=True)
+    user=UserServiceCounterSerializer(many=True)
     class Meta:
         model=models.RequestForm
         fields=['id','title_form','user','status','type_form','value_form']
@@ -21,7 +23,7 @@ class RequestSerializer(serializers.ModelSerializer):
 
 class ResponseSerializer(serializers.ModelSerializer):
     
-    user=UserSerializer(many=True)
+    user=UserServiceCounterSerializer(many=True)
     class Meta:
         model=models.RequestForm
         fields=['title_form','user','status','type_form','value_form']
