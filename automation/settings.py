@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'HRdesk',
     'BulletinBoard',
     'Food',
+    'dormitory',
 
     #tools
     'django.contrib.admin',

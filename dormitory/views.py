@@ -35,17 +35,17 @@ class DormitoryViewSetManager(ModelViewSet):
             serializer.save()
             return Response(serializer.data)
     @action(detail=False, methods=['PUT'])
-    def put_dormitory(self,request,number,capacity):
+    def put_dormitory(self,request,id):
         if request.method == 'PUT':
-            dormitory = Dormitory.objects.get(number = number,capacity = capacity,user_id = request.user.id)
+            dormitory = Dormitory.objects.get(id=id)
             serializer = DormitorySerializer(dormitory, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
     @action(detail=False, methods=['DELETE'])
-    def delete_dormitory(self,request,number,capacity):
+    def delete_dormitory(self,request,id):
         if request.method == 'DELETE':
-            Dormitory.objects.get(number = number,capacity = capacity,user_id = request.user.id).delete()
+            Dormitory.objects.get(id=id).delete()
             return Response("OK")
     #################################################################################################
     #def get_reserved_food_manager(self, request,company):

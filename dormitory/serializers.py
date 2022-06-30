@@ -7,4 +7,4 @@ class DormitorySerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only = True)
     class Meta:
         model = Dormitory
-        fields = ['user_id','id', 'number', 'capacity','company']
+        fields = ['user_id','id', 'number','building_name','capacity','remaining_capacity']
