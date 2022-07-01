@@ -29,7 +29,7 @@ class AddEmployeeSalarySerializer(serializers.ModelSerializer):
         
         model=EmployeeSalary
         fields=['id','employee','monthly_salary','reward_benefit','min_working',]
-        read_only_fields=['id']
+        read_only_fields=['id','employee']
         
 class ShowMySalarySeriializer(serializers.ModelSerializer):
     
