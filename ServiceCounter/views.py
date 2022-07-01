@@ -1,18 +1,17 @@
 
-from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet 
 from rest_framework.permissions import IsAuthenticated
-from ServiceCounter import serializers
-from  ServiceCounter.serializers import *
+from rest_framework.decorators import action
+from ServiceCounter.serializers import *
 from .models import *
-
-
-
+from automation.pagination import defult8_pagination
 class AdminServiceCounter(ModelViewSet):
     serializer_class=ResponseSerializer
+    pagination_class=defult8_pagination
+    
     queryset=RequestForm.objects.all()
     
     
@@ -21,6 +20,7 @@ class AdminServiceCounter(ModelViewSet):
             listrequest=RequestForm.objects.filter(user__company=request.user.company,status='P',user__role='E').order_by('created_time')
             serlializers=ResponseSerializer(listrequest,many=True)
             return Response(serlializers.data)
+        
     action(detail=False ,methods=['PATCH'])
     def __show_all_request__(self ,request,id):
             getrequest=get_object_or_404(RequestForm,pk=id,user__company=request.user.company)
@@ -34,6 +34,8 @@ class AdminServiceCounter(ModelViewSet):
 class EmployeeServiceCounter(ModelViewSet):
     
     serializer_class=RequestSerializer
+    pagination_class=defult8_pagination
+    
     queryset=RequestForm.objects.all()
     
     
@@ -44,14 +46,14 @@ class EmployeeServiceCounter(ModelViewSet):
             requestinstance=RequestForm(user_id=request.user.id)
             serializer = RequestSerializer(requestinstance, data=request.data)
             serializer.is_valid(raise_exception=True)
-            requestinstance.save()
             serializer.save()
+            requestinstance.save()
             return Response(serializer.data)
+        
         elif request.method=='GET':
             listrequest=RequestForm.objects.filter(user_id=request.user.id)
             serlializers=ResponseSerializer(listrequest,many=True)
             return Response(serlializers.data)
-        
    
             
             

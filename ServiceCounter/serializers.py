@@ -8,8 +8,8 @@ class RequestSerializer(serializers.ModelSerializer):
     
         class Meta:
             model=RequestForm
-            fields=['id','title_form','user','status','type_form','value_form']
-            read_only_fields=['id','status','user']
+            fields=['id','title_form','status','type_form','value_form']
+            read_only_fields=['id','status']
 
 class ResponseSerializer(serializers.ModelSerializer):
     
