@@ -36,17 +36,17 @@ class FoodViewSetManager(ModelViewSet):
             serializer.save()
             return Response(serializer.data)
     @action(detail=False, methods=['PUT'])
-    def put_food(self,request,name,date):
+    def put_food(self,request,id):
         if request.method == 'PUT':
-            food = Food.objects.get(name=name,date=date,user_id = request.user.id)
+            food = Food.objects.get(id=id)
             serializer = FoodSerializer(food, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
     @action(detail=False, methods=['DELETE'])
-    def delete_food(self,request,name,date):
+    def delete_food(self,request,id):
         if request.method == 'DELETE':
-            Food.objects.get(name=name,date=date,user_id = request.user.id).delete()
+            Food.objects.get(id=id).delete()
             return Response("OK")
     #################################################################################################
     #def get_reserved_food_manager(self, request,company):
@@ -55,7 +55,7 @@ class FoodViewSetManager(ModelViewSet):
     #        serializer = FoodSerializer(food,many=True)
     #        return Response(serializer.data)
     @action(detail=False, methods=['GET'])
-    def reserve_food_manager(self,request,name,date,company):
+    def reserve_food_manager(self,request,id):
         if request.method == 'GET':
             food = Food.objects.get(name=name,company=company,date=date)
             food.amount-=1
