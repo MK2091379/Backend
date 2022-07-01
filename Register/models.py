@@ -68,8 +68,8 @@ class User(AbstractUser):
     
     def add_salary(self):
         
-            user=User.objects.get(id=self.id)
-            add_obj_salary=EmployeeSalary.objects.create(employee_id=user.id,monthly_salary=0.0,reward_benefit=0.0,min_working=0.0)
+            add_obj_salary=EmployeeSalary(employee_id=self.user.id,monthly_salary=0.0,reward_benefit=0.0,min_working=0.0)
+            add_obj_salary.save()
           
             
         
