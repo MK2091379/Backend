@@ -26,6 +26,12 @@ class AdminTransportation(models.Model):
     thursday=models.BooleanField(default=False)
     friday=models.BooleanField(default=False)
     
+    
+    
+    
+    def getter_price(self):
+        return float(self.monthly_price)
+    
 # class ResponseApi(models.Model):
     
 #     Response=models.TextField()

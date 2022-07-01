@@ -1,21 +1,13 @@
-from calendar import month
-from logging.handlers import TimedRotatingFileHandler
-from unicodedata import decimal
-from urllib import response
-from webbrowser import get
-from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from requests import request
 from rest_framework.viewsets import  ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
-from datetime import datetime
 from Transportation.models import AdminTransportation
 from TimeAndDateTracker.models import TimeAndDateTracker
-
 from .serializers import AddEmployeeSalarySerializer,ShowMySalarySeriializer
 from .models import EmployeeSalary
+from datetime import datetime
 # Create your views here.
 
 
@@ -39,7 +31,7 @@ class AdminSalaryAPI(ModelViewSet):
          serializer=AddEmployeeSalarySerializer(getsalaryuser,data=request.data)
          serializer.is_valid(raise_exception=True)
          serializer.save()
-         return response(status=status.HTTP_200_OK)
+         return Response(status=status.HTTP_200_OK)
          
 
 class EomplyeeShowSalary(ModelViewSet):
@@ -58,13 +50,13 @@ class EomplyeeShowSalary(ModelViewSet):
        settimetracker=TimeAndDateTracker.objects.filter(user_id=request.user.id 
                                                         ,created_date__year=now_year,created_date__month=now_month)
        
-       list_transporttion=AdminTransportation.objects.filter(user_id=request.user.id)
+       list_transporttion=AdminTransportation.objects.filter(user__id=request.user.id)
        #ttal hour of time tracker 
        for track in settimetracker:
            total_hour+=track.time_minus()
            #total price teansporation 
        for price in list_transporttion:
-            total_cost_transportation=decimal(price.monthly_price)
+            total_cost_transportation=price.getter_price()
            
        print(total_hour)   
         
@@ -72,6 +64,7 @@ class EomplyeeShowSalary(ModelViewSet):
        serializer=ShowMySalarySeriializer(getsalary,many=False)
        new_serializer={ 
                        "salary":serializer.data["monthly_salary"],
+                       "min_time":serializer.data["monthly_salary"],
                        "health_insurance":100,
                        "total_time":total_hour,
                        "dormitory":0.0,
