@@ -1,3 +1,4 @@
+from pickle import TRUE
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import  ModelViewSet
 from rest_framework.decorators import action
@@ -32,6 +33,33 @@ class AdminSalaryAPI(ModelViewSet):
          serializer.is_valid(raise_exception=True)
          serializer.save()
          return Response(status=status.HTTP_200_OK)
+class AdminSalaryAPI(ModelViewSet):
+    serializer_class=AddEmployeeSalarySerializer
+    queryset=EmployeeSalary.objects.all()
+    
+    
+    @action(detail=False,methods=['PATCH'])
+    def add_salary_for_employee(self,request,id):
+   
+         getsalaryuser=get_object_or_404(EmployeeSalary,user_id=id)
+         serializer=AddEmployeeSalarySerializer(getsalaryuser,data=request.data)
+         serializer.is_valid(raise_exception=True)
+         serializer.save()
+         return Response(status=status.HTTP_200_OK)
+     
+    @action(detail=False,methods=['GET'])
+    def get_my_employee_salary(self,request):
+   
+        getsalaryuser=EmployeeSalary.objects.filter(employee__company=request.user.company)
+        if getsalaryuser.exists():
+            serializer=AddEmployeeSalarySerializer(getsalaryuser,many=TRUE)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+
          
 
 class EomplyeeShowSalary(ModelViewSet):
