@@ -36,8 +36,8 @@ class ShowMySalarySeriializer(serializers.ModelSerializer):
 
     class Meta:
         model=EmployeeSalary
-        fields=['monthly_salary']
-        read_only_fields=['monthly_salary']
+        fields=['monthly_salary','min_working']
+        read_only_fields=['monthly_salary','min_working']
         
  
     

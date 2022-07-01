@@ -52,10 +52,8 @@ class AdminSalaryAPI(ModelViewSet):
    
         getsalaryuser=EmployeeSalary.objects.filter(employee__company=request.user.company)
         if getsalaryuser.exists():
-            serializer=AddEmployeeSalarySerializer(getsalaryuser,many=TRUE)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(status=status.HTTP_200_OK)
+            serializer=AddEmployeeSalarySerializer(getsalaryuser,many=True)
+            return Response(serializer.data)
         else:
              return Response(status=status.HTTP_404_NOT_FOUND)
         
@@ -91,8 +89,8 @@ class EomplyeeShowSalary(ModelViewSet):
        getsalary=get_object_or_404(EmployeeSalary,employee_id=request.user.id)
        serializer=ShowMySalarySeriializer(getsalary,many=False)
        new_serializer={ 
-                       "salary":serializer.data["monthly_salary"],
-                       "min_time":serializer.data["monthly_salary"],
+                       "monthly_salary":serializer.data["monthly_salary"],
+                       "min_time":serializer.data["min_working"],
                        "health_insurance":100,
                        "total_time":total_hour,
                        "dormitory":0.0,
