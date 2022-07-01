@@ -23,6 +23,6 @@ class RequestForm(models.Model):
     type_form=models.CharField(max_length=150)
     value_form=models.TextField()
     
-    created_time=models.DateField(auto_now_add=True)
+    created_time=models.DateTimeField(auto_now_add=True)
     
   

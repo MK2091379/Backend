@@ -10,7 +10,6 @@ from .models import *
 from automation.pagination import defult8_pagination
 class AdminServiceCounter(ModelViewSet):
     serializer_class=ResponseSerializer
-    pagination_class=defult8_pagination
     
     queryset=RequestForm.objects.all()
     
@@ -34,7 +33,6 @@ class AdminServiceCounter(ModelViewSet):
 class EmployeeServiceCounter(ModelViewSet):
     
     serializer_class=RequestSerializer
-    pagination_class=defult8_pagination
     
     queryset=RequestForm.objects.all()
     
