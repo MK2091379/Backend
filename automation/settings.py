@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Salary',
     'Notepad',
     'Food',
+    'ServiceCounter',
 
     #tools
     'django.contrib.admin',
@@ -81,6 +82,9 @@ INSTALLED_APPS = [
 
 
 ]
+
+
+
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",

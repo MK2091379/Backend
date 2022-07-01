@@ -70,6 +70,8 @@ urlpatterns = [
     path('Salary/',include('Salary.urls')),
     #Notepad
     path('notepad/',include('Notepad.urls')),
+    #ServiceCounter
+    path('servicecounter/',include('ServiceCounter.urls')),
 ]
 
 
