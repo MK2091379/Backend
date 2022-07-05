@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'BulletinBoard',
     'Food',
     'dormitory',
+    'CompanyAssets',
 
     #tools
     'django.contrib.admin',

@@ -5,7 +5,7 @@ from Register.models import User
 
 
 
-class Assets(models.Model):
+class CompanyAssets(models.Model):
     name = models.CharField(null=True,blank=True,max_length=200)
     description = models.TextField(null=True,blank=True)
     number = models.IntegerField(blank=True,null=True)

@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from Register.models import User
-from .models import Assets
+from .models import CompanyAssets
 
-class DormitorySerializer(serializers.ModelSerializer):
+class CompanyAssetsSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(read_only=True)
     id = serializers.IntegerField(read_only = True)
     class Meta:
-        model = Assets
+        model = CompanyAssets
         fields = ['user_id','id', 'name','description','number']
