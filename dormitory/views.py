@@ -54,20 +54,20 @@ class DormitoryViewSetManager(ModelViewSet):
     #        serializer = FoodSerializer(food,many=True)
     #        return Response(serializer.data)
     @action(detail=False, methods=['GET'])
-    def reserve_dormitory_manager(self,request,number,company):
+    def reserve_dormitory_manager(self,request,id):
         if request.method == 'GET':
-            dormitory = Dormitory.objects.get(number = number,company=company)
-            if (dormitory.capacity >0):
-                dormitory.capacity-=1
+            dormitory = Dormitory.objects.get(id=id)
+            if (dormitory.remaining_capacity >0):
+                dormitory.remaining_capacity-=1
                 dormitory.save()
                 return Response("OK")
             else:
                 return Response("The room is feel")
-    @action(detail=False, methods=['GET'])
-    def delete_reserved_dormitory_manager(self,request,number,company):
-        if request.method == 'GET':
-            dormitory = Dormitory.objects.get(number = number,company=company)
-            dormitory.amount+=1
+    @action(detail=False, methods=['DELETE'])
+    def delete_reserved_dormitory_manager(self,request,id):
+        if request.method == 'DELETE':
+            dormitory = Dormitory.objects.get(id=id)
+            dormitory.remaining_capacity+=1
             dormitory.save()
             return Response("OK")
 class DormitoryViewSetEmployee(ModelViewSet):
@@ -75,20 +75,28 @@ class DormitoryViewSetEmployee(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Dormitory.objects.all()
     serializer_class = DormitorySerializer
-    @action(detail=False, methods=['POST'])
-    def reserve_dormitory_employee(self,request,number,date,company):
+    @action(detail=False, methods=['GET'])
+    def reserve_dormitory_employee(self,request,id):
         if request.method == 'GET':
-            dormitory = Dormitory.objects.get(number = number,company=company)
-            if (dormitory.capacity >0):
-                dormitory.capacity-=1
+            dormitory = Dormitory.objects.get(id=id)
+            if (dormitory.remaining_capacity >0):
+                dormitory.remaining_capacity-=1
                 dormitory.save()
                 return Response("OK")
             else:
                 return Response("The room is feel")
-    @action(detail=False, methods=['GET'])
-    def delete_reserved_dormitory_employee(self,request,number,date,company):
-        if request.method == 'GET':
-            dormitory = Dormitory.objects.get(number = number,company=company)
-            dormitory.amount+=1
+    @action(detail=False, methods=['DELETE'])
+    def delete_reserved_dormitory_employee(self,request,id):
+        if request.method == 'DELETE':
+            dormitory = Dormitory.objects.get(id=id)
+            dormitory.remaining_capacity+=1
             dormitory.save()
+            return Response("OK")
+    @action(detail=False, methods=['PUT'])
+    def main_reserve_dormitory_employee(self,request,id):
+        if request.method == 'PUT':
+            room = Dormitory.objects.get(id=id)
+            room.remaining_capacity-=1
+            room.user_room.add(request.user.id)
+            room.save()
             return Response("OK")

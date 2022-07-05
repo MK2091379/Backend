@@ -10,10 +10,10 @@ urlpatterns=[
     path('delete_dormitory/<int:id>',views.DormitoryViewSetManager.as_view({'delete':'delete_dormitory'})),
     ###########################################################################################################################
     #path('get_reserved_dormitory_manager',views.dormitoryViewSetManager.as_view({'get':'get_reserved_dormitory_manager'})),
-    #path('reserve_dormitory_manager/<str:number>/<str:company>',views.DormitoryViewSetManager.as_view({'get':'reserve_dormitory_manager'})),
-    #path('delete_reserved_dormitory_manager/<str:number>/<str:company>/<str:date>',views.DormitoryViewSetManager.as_view({'get':'delete_reserved_dormitory_manager'})),
+    path('reserve_dormitory_manager/<int:id>',views.DormitoryViewSetManager.as_view({'get':'reserve_dormitory_manager'})),
+    path('delete_reserved_dormitory_manager/<int:id>',views.DormitoryViewSetManager.as_view({'delete':'delete_reserved_dormitory_manager'})),
     #######################################################################################################################
-    #path('get_reserved_dormitory_employee',views.dormitoryViewSetEmployee.as_view({'get':'get_reserved_dormitory_employee'})),
-    #path('reserve_dormitory_employee/<str:number>/<str:company>/<str:date>',views.DormitoryViewSetEmployee.as_view({'get':'reserve_dormitory_employee'})),
-    #path('delete_reserved_dormitory_employee/<str:number>/<str:company>/<str:date>',views.DormitoryViewSetEmployee.as_view({'get':'delete_reserved_dormitory_employee'})),
+    path('main_reserve_dormitory_employee/<int:id>',views.DormitoryViewSetEmployee.as_view({'put':'main_reserve_dormitory_employee'})),
+    path('reserve_dormitory_employee/<int:id>',views.DormitoryViewSetEmployee.as_view({'get':'reserve_dormitory_employee'})),
+    path('delete_reserved_dormitory_employee/<int:id>',views.DormitoryViewSetEmployee.as_view({'delete':'delete_reserved_dormitory_employee'})),
 ]
