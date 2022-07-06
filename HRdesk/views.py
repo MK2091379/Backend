@@ -17,6 +17,6 @@ class HRDeskViewSet(ModelViewSet):
     @action(detail=False, methods=['GET'])
     def get_employee(self, request):
         if request.method == 'GET':
-            tracker = User.objects.filter(role = 'E')
+            tracker = User.objects.filter(role = 'E',company = request.user.company)
             serializer = HRdeskSerializer(tracker,many=True)
             return Response(serializer.data)
