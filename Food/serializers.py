@@ -12,4 +12,8 @@ class FoodSerializer(serializers.ModelSerializer):
     #company = serializers.CharField(read_only = True)
     class Meta:
         model = Food
+<<<<<<< HEAD
         fields = ['user_id','id','date', 'name', 'amount','company','price']
+=======
+        fields = ['user_id','id','date', 'name','description','image','amount','company','price']
+>>>>>>> dormitory
