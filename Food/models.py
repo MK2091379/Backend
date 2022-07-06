@@ -18,10 +18,4 @@ class Food(models.Model):
     image = models.ImageField(upload_to=get_upload_path, height_field=None, width_field=None, max_length=100,blank = True,null = True)
     amount = models.IntegerField(null=True,blank = True)
     company = models.CharField(max_length=200,null=True,blank=True)
-<<<<<<< HEAD
     price = models.DecimalField(null=True,blank=True,max_digits=5,decimal_places=0)
-=======
-    price = models.DecimalField(null=True,blank=True,max_digits=5,decimal_places=0)
-
-    
->>>>>>> dormitory
