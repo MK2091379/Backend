@@ -1,8 +1,8 @@
-from statistics import mode
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
+from Salary.models import EmployeeSalary 
+from django.db import models
 
 
 
@@ -69,6 +69,14 @@ class User(AbstractUser):
     room = models.ForeignKey('dormitory.Dormitory',on_delete=models.SET_NULL,null=True,related_name='user_room')
     #validators=[RegexValidator(regex='^0[0-9]{2,}[0-9]{7,}$')]
   
+    
+    def add_salary(self):
+        
+            add_obj_salary=EmployeeSalary(employee_id=self.user.id,monthly_salary=0.0,reward_benefit=0.0,min_working=0.0)
+            add_obj_salary.save()
+          
+            
+        
 
     
 

@@ -67,9 +67,13 @@ urlpatterns = [
     #ToDoList
     path('todolist/',include('ToDoList.urls')),
     #Transportation
-    path('ServiceCounter/',include('ServiceCounter.urls')),
+    path('Transportation/',include('Transportation.urls')),
+    #Salary
+    path('Salary/',include('Salary.urls')),
     #Notepad
     path('notepad/',include('Notepad.urls')),
+    #ServiceCounter
+    path('servicecounter/',include('ServiceCounter.urls')),
 ]
 
 
