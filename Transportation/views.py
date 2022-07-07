@@ -13,6 +13,14 @@ from automation.permissions import IsCompanyOwner, IsEmployee
 from Transportation import serializers
 
 
+from  rest_framework.pagination import PageNumberPagination
+
+
+
+paginator=PageNumberPagination()
+paginator.page_size=10
+
+
 class AdminTransportationViewSet(ModelViewSet):
      permission_classes = [IsAuthenticated, IsCompanyOwner]
      queryset = AdminTransportation.objects.all()
@@ -21,10 +29,11 @@ class AdminTransportationViewSet(ModelViewSet):
      @action(detail=False, methods=['GET', 'POST'])
      def admin_transportation_view_list(self, request):
          if request.method == 'GET':
-               queryset = AdminTransportation.objects.filter(
-                   admin_id=request.user.id)
+               queryset =paginator.paginate_queryset (AdminTransportation.objects.filter(
+                   admin_id=request.user.id),request)
                serializer = AdminTransportationSerializer(queryset, many=True)
-               return Response(serializer.data)
+               
+               return paginator.get_paginated_response(serializer.data)
          elif request.method == 'POST':
                location = AdminTransportation.objects.create(
                    admin_id=request.user.id, admin=request.user)
@@ -64,10 +73,10 @@ class EmployeeReserve(ModelViewSet):
 
 	@action(detail=False, methods=['GET'])
 	def getlist_view(self, request):
-			queryset = AdminTransportation.objects.filter(
-				admin__company=request.user.company)
+			queryset = paginator.paginate_queryset(AdminTransportation.objects.filter(
+				admin__company=request.user.company),request)
 			serializer = EmployeeGetSerializer(queryset, many=True)
-			return Response(serializer.data)
+			return paginator.get_paginated_response(serializer.data)
 
 	@action(detail=False, methods=['PATCH'])
 	def reserve_view(self, request, id):
