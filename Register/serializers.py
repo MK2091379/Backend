@@ -9,6 +9,8 @@ class GetRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=['role']
+        
+        
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model=Company
@@ -35,6 +37,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
         
         user.set_password(validated_data['password'])
+        user.add_salary()
         user.save()
         return user
         
@@ -87,3 +90,5 @@ class CompanyGetSerializer(serializers.ModelSerializer):
         class Meta:
             model=Company
             fields=['company_name']
+            
+
