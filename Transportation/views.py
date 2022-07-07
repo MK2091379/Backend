@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from Register.models import User
+from automation import pagination
 from .models import AdminTransportation
 from .serializers import AdminTransportationSerializer, EmployeeGetSerializer, UserTransportationSerializer
 from rest_framework import status
@@ -17,18 +18,20 @@ from  rest_framework.pagination import PageNumberPagination
 
 
 
-paginator=PageNumberPagination()
-paginator.page_size=10
+
 
 
 class AdminTransportationViewSet(ModelViewSet):
      permission_classes = [IsAuthenticated, IsCompanyOwner]
      queryset = AdminTransportation.objects.all()
      serializer_class = AdminTransportationSerializer
+     pagination_class=PageNumberPagination
 
      @action(detail=False, methods=['GET', 'POST'])
      def admin_transportation_view_list(self, request):
          if request.method == 'GET':
+               paginator=PageNumberPagination()
+               paginator.page_size=10
                queryset =paginator.paginate_queryset (AdminTransportation.objects.filter(
                    admin_id=request.user.id),request)
                serializer = AdminTransportationSerializer(queryset, many=True)
@@ -67,39 +70,41 @@ class ServiceUpdatingSet(ModelViewSet):
 
 class EmployeeReserve(ModelViewSet):
 
-	permission_classes = [IsAuthenticated]
-	queryset = AdminTransportation.objects.all()
-	serializer_class = EmployeeGetSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = AdminTransportation.objects.all()
+    serializer_class = EmployeeGetSerializer
+    pagination_class=PageNumberPagination
+    @action(detail=False, methods=['GET'])
+    def getlist_view(self, request):
+            paginator=PageNumberPagination()
+            paginator.page_size=10
+            queryset = paginator.paginate_queryset(AdminTransportation.objects.filter(
+                admin__company=request.user.company),request)
+            serializer = EmployeeGetSerializer(queryset, many=True)
+            return paginator.get_paginated_response(serializer.data)
 
-	@action(detail=False, methods=['GET'])
-	def getlist_view(self, request):
-			queryset = paginator.paginate_queryset(AdminTransportation.objects.filter(
-				admin__company=request.user.company),request)
-			serializer = EmployeeGetSerializer(queryset, many=True)
-			return paginator.get_paginated_response(serializer.data)
+    @action(detail=False, methods=['PATCH'])
+    def reserve_view(self, request, id):
+        if request.method == 'PATCH':
+            reserve = get_object_or_404(AdminTransportation, id=id)
+            reserve.user.add(request.user.id)
+            if reserve.maximum_capacity > 0:
+                reserve.maximum_capacity -= 1
+            else:
+                return Response(status="Capacity is complete!")
 
-	@action(detail=False, methods=['PATCH'])
-	def reserve_view(self, request, id):
-		if request.method == 'PATCH':
-			reserve = get_object_or_404(AdminTransportation, id=id)
-			reserve.user.add(request.user.id)
-			if reserve.maximum_capacity > 0:
-				reserve.maximum_capacity -= 1
-			else:
-				return Response(status="Capacity is complete!")
+            reserve.save()
+            return Response(status=status.HTTP_200_OK)
 
-			reserve.save()
-			return Response(status=status.HTTP_200_OK)
-
-	@action(detail=False,methods=['PATCH'])
-	def unreserve_view(self,request,id):
-		if request.method=='PATCH':
-			reserve = get_object_or_404(AdminTransportation,id=id)
-			reserve.user.remove(request.user.id)
-			reserve.maximum_capacity+=1
-				
-			reserve.save()
-			return Response(status=status.HTTP_200_OK)
+    @action(detail=False,methods=['PATCH'])
+    def unreserve_view(self,request,id):
+        if request.method=='PATCH':
+            reserve = get_object_or_404(AdminTransportation,id=id)
+            reserve.user.remove(request.user.id)
+            reserve.maximum_capacity+=1
+                
+            reserve.save()
+            return Response(status=status.HTTP_200_OK)
     
     
 class ShowServicesApi(ModelViewSet):

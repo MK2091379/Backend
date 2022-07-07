@@ -14,17 +14,19 @@ from rest_framework.pagination import PageNumberPagination
 
 
 
-paginator=PageNumberPagination()
-paginator.page_size=10
+
 
 # Create your views here.
 
 class ToDoListViewSet(ModelViewSet):
      permission_classes = [IsAuthenticated]
      serializer_class=TaskSerializer
+     pagination_class=PageNumberPagination
      @action(detail=False,methods=['GET','POST'])    
      def todo_view_list(self,request):
          if request.method=='GET':
+               paginator=PageNumberPagination()
+               paginator.page_size=10
                queryset = paginator.paginate_queryset(
                      Task.objects.filter(user_id=request.user.id).order_by('priority'),
                                                       request)
@@ -40,6 +42,7 @@ class TaskUpdatingSet(ModelViewSet):
       
     serializer_class=TaskSerializer
     permission_classes = [IsAuthenticated]
+    
 
     @action(detail=False, methods=['PUT','DELETE'])
     def taskupdate (self, request,id1):

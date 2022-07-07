@@ -13,8 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 
 
-paginator=PageNumberPagination()
-paginator.page_size=8
+
 
 
 
@@ -22,9 +21,12 @@ class TimeAndDateTrackerViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = TimeAndDateTracker.objects.all()
     serializer_class = TimeAndDateTrackerSerializer
+    pagination_class=PageNumberPagination
     @action(detail=False, methods=['GET','POST'])
     def me(self, request):
         if request.method == 'GET':
+            paginator=PageNumberPagination()
+            paginator.page_size=8
             tracker = paginator.paginate_queryset(TimeAndDateTracker.objects.filter(user_id=request.user.id),request)
             serializer = TimeAndDateTrackerSerializer(tracker,many=True)
             return paginator.get_paginated_response(serializer.data)

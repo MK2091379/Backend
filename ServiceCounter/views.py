@@ -12,17 +12,19 @@ from .models import *
 
 
 
-paginator=PageNumberPagination()
-paginator.page_size=8
 
 
 class AdminServiceCounter(ModelViewSet):
     serializer_class=ResponseSerializer
     queryset=RequestForm.objects.all()
+    pagination_class=PageNumberPagination
     
     
     action(detail=False ,methods=['GET'])
     def response_me(self ,request):
+        
+            paginator=PageNumberPagination()
+            paginator.page_size=8
             listrequest=paginator.paginate_queryset(RequestForm.objects.filter(user__company=request.user.company,status='P',user__role='E').order_by('created_time'),request)
             serlializers=ResponseSerializer(listrequest,many=True)
             return paginator.get_paginated_response(serlializers.data)
@@ -42,6 +44,8 @@ class EmployeeServiceCounter(ModelViewSet):
     serializer_class=RequestSerializer
     
     queryset=RequestForm.objects.all()
+    pagination_class=PageNumberPagination
+    
     
     
     action(detail=False,methods=['POST','GET'])
@@ -56,6 +60,8 @@ class EmployeeServiceCounter(ModelViewSet):
             return Response(serializer.data)
         
         elif request.method=='GET':
+            paginator=PageNumberPagination()
+            paginator.page_size=8
             listrequest=paginator.paginate_queryset(RequestForm.objects.filter(user_id=request.user.id),request)
             serlializers=ResponseSerializer(listrequest,many=True)
             return paginator.get_paginated_response(serlializers.data)

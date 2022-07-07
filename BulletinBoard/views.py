@@ -12,17 +12,19 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import  PageNumberPagination
 
 
-paginator=PageNumberPagination()
-paginator.page_size=8
+
 
 class BulletinBoardViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = BulletinBoard.objects.all()
     serializer_class = BulletinBoardSerializer
+    pagination_class=PageNumberPagination
     
     @action(detail=False, methods=['GET'])
     def get_bulletin_board(self, request):
         if request.method == 'GET':
+            paginator=PageNumberPagination()
+            paginator.page_size=8
             queryset = paginator.paginate_queryset(BulletinBoard.objects.all(),request)
             serializer = BulletinBoardSerializer(queryset,many=True)
             return paginator.get_paginated_response(serializer.data)
