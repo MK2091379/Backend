@@ -10,6 +10,11 @@ from rest_framework import generics
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
+
+
+paginator=PageNumberPagination()
+paginator.page_size=8
 
 
 
@@ -20,9 +25,10 @@ class TimeAndDateTrackerViewSet(ModelViewSet):
     @action(detail=False, methods=['GET','POST'])
     def me(self, request):
         if request.method == 'GET':
-            tracker = TimeAndDateTracker.objects.filter(user_id=request.user.id)
+            tracker = paginator.paginate_queryset(TimeAndDateTracker.objects.filter(user_id=request.user.id),request)
             serializer = TimeAndDateTrackerSerializer(tracker,many=True)
-            return Response(serializer.data)
+            return paginator.get_paginated_response(serializer.data)
+        
         elif request.method == 'POST':
             tracker = TimeAndDateTracker.objects.create(user_id=request.user.id)
             serializer = TimeAndDateTrackerSerializer(tracker, data=request.data)
