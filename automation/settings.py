@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     #debug tools
     'debug_toolbar',
 
@@ -71,19 +72,12 @@ INSTALLED_APPS = [
 
     #map
     'location_field.apps.DefaultConfig'
-<<<<<<< HEAD
 
 
 
 
 
-=======
-    
 
-    
- 
-    
->>>>>>> fd423b21a1b95e28772ced5094cae39f01adc82c
 
 
 
@@ -252,9 +246,4 @@ LOCATION_FIELD = {
 }
 
 
-<<<<<<< HEAD
-=======
-        
 
-
->>>>>>> fd423b21a1b95e28772ced5094cae39f01adc82c
