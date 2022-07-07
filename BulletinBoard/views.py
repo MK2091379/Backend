@@ -9,17 +9,24 @@ from rest_framework import generics
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import  PageNumberPagination
+
+
+paginator=PageNumberPagination()
+paginator.page_size=8
 
 class BulletinBoardViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = BulletinBoard.objects.all()
     serializer_class = BulletinBoardSerializer
+    
     @action(detail=False, methods=['GET'])
     def get_bulletin_board(self, request):
         if request.method == 'GET':
-            queryset = BulletinBoard.objects.all()
+            queryset = paginator.paginate_queryset(BulletinBoard.objects.all(),request)
             serializer = BulletinBoardSerializer(queryset,many=True)
-            return Response(serializer.data)
+            return paginator.get_paginated_response(serializer.data)
+        
     @action(detail=False, methods=['POST'])
     def post_bulletin_board(self, request):
         if request.method == 'POST':
