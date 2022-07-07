@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'Salary',
     'Notepad',
     'Food',
+    'dormitory',
+    'CompanyAssets',
     'ServiceCounter',
 
     #tools

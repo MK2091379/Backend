@@ -62,9 +62,13 @@ class User(AbstractUser):
     address = models.TextField(null=True,blank=True)
     postal_code = models.CharField(max_length=10,validators=[RegexValidator(regex='^[0-9]{10}')],null=True)
     sexuality = models.CharField(max_length=1,choices=sexuality_choises,default="M")
-    telephone = models.CharField(max_length=11,validators=[RegexValidator(regex='^0[0-9]{2,}[0-9]{7,}$')],null=True)
+    telephone = models.CharField(max_length=11,null=True)
     maritalـstatus = models.CharField(max_length=1,choices=maritalـstatus_choises,default="S")
     degreeـofـeducation = models.CharField(max_length=1,choices=degreeـofـeducationـchoises,default="O")
+    check_transportation=models.BooleanField(default=False)
+    room = models.ForeignKey('dormitory.Dormitory',on_delete=models.SET_NULL,null=True,related_name='user_room')
+    #validators=[RegexValidator(regex='^0[0-9]{2,}[0-9]{7,}$')]
+  
     
     def add_salary(self):
         
