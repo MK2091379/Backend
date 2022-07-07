@@ -76,18 +76,13 @@ INSTALLED_APPS = [
 
     #map
     'location_field.apps.DefaultConfig'
-<<<<<<< HEAD
 
 
 
 
 
-
-=======
 
 ]
->>>>>>> 8178793bb9ab4f73258cfb73e85017d6c5e9b7cd
-
 
 
 
@@ -252,9 +247,6 @@ LOCATION_FIELD = {
     'search.provider': 'nominatim',
     'provider.openstreetmap.max_zoom': 18,
 }
-<<<<<<< HEAD
 
 
 
-=======
->>>>>>> 8178793bb9ab4f73258cfb73e85017d6c5e9b7cd
