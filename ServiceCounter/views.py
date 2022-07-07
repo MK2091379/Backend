@@ -22,10 +22,14 @@ class AdminServiceCounter(ModelViewSet):
     
     action(detail=False ,methods=['GET'])
     def response_me(self ,request):
+<<<<<<< HEAD
         
             paginator=PageNumberPagination()
             paginator.page_size=8
             listrequest=paginator.paginate_queryset(RequestForm.objects.filter(user__company=request.user.company,status='P',user__role='E').order_by('created_time'),request)
+=======
+            listrequest=RequestForm.objects.filter(user__company=request.user.company,status='pending',user__role='E').order_by('created_time')
+>>>>>>> servicecounter
             serlializers=ResponseSerializer(listrequest,many=True)
             return paginator.get_paginated_response(serlializers.data)
         
