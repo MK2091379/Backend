@@ -16,7 +16,7 @@ class AdminServiceCounter(ModelViewSet):
     
     action(detail=False ,methods=['GET'])
     def response_me(self ,request):
-            listrequest=RequestForm.objects.filter(user__company=request.user.company,status='P',user__role='E').order_by('created_time')
+            listrequest=RequestForm.objects.filter(user__company=request.user.company,status='pending',user__role='E').order_by('created_time')
             serlializers=ResponseSerializer(listrequest,many=True)
             return Response(serlializers.data)
         
