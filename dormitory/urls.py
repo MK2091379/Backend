@@ -13,7 +13,6 @@ urlpatterns=[
     path('reserve_dormitory_manager/<int:id>',views.DormitoryViewSetManager.as_view({'get':'reserve_dormitory_manager'})),
     path('delete_reserved_dormitory_manager/<int:id>',views.DormitoryViewSetManager.as_view({'delete':'delete_reserved_dormitory_manager'})),
     #######################################################################################################################
-    path('main_reserve_dormitory_employee/<int:id>',views.DormitoryViewSetEmployee.as_view({'put':'main_reserve_dormitory_employee'})),
     path('reserve_dormitory_employee/<int:id>',views.DormitoryViewSetEmployee.as_view({'get':'reserve_dormitory_employee'})),
     path('delete_reserved_dormitory_employee/<int:id>',views.DormitoryViewSetEmployee.as_view({'delete':'delete_reserved_dormitory_employee'})),
 ]

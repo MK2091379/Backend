@@ -92,11 +92,3 @@ class DormitoryViewSetEmployee(ModelViewSet):
             dormitory.remaining_capacity+=1
             dormitory.save()
             return Response("OK")
-    @action(detail=False, methods=['PUT'])
-    def main_reserve_dormitory_employee(self,request,id):
-        if request.method == 'PUT':
-            room = Dormitory.objects.get(id=id)
-            room.remaining_capacity-=1
-            room.user_room.add(request.user.id)
-            room.save()
-            return Response("OK")

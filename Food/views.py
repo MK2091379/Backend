@@ -87,8 +87,3 @@ class FoodViewSetEmployee(ModelViewSet):
             food = Food.objects.filter(company = request.user.company)
             serializer = FoodSerializer(food,many=True)
             return Response(serializer.data)
-    @action(detail=False, methods=['GET'])
-    def get_month_food_employee(self, request):
-            food = Food.objects.filter(company = request.user.company)
-            serializer = FoodSerializer(food,many=True)
-            return Response(serializer.data)
