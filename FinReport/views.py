@@ -39,7 +39,7 @@ class ReportDetail(ModelViewSet):
 
 
 
-class AtionReport(ModelViewSet):
+class ActionReport(ModelViewSet):
     
     serializer_class=EditReportSerializer
     queryset=Report.objects.all()
