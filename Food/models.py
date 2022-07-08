@@ -1,9 +1,3 @@
-from datetime import date
-from email.mime import image
-from operator import truediv
-from tkinter import CASCADE
-from urllib.request import CacheFTPHandler
-from xml.parsers.expat import model
 from django.db import models
 from Register.models import User,Company
 
