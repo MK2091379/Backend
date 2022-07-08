@@ -25,7 +25,7 @@ class AdminServiceCounter(ModelViewSet):
         
             paginator=PageNumberPagination()
             paginator.page_size=8
-            listrequest=paginator.paginate_queryset(RequestForm.objects.filter(user__company=request.user.company,status='P',user__role='E').order_by('created_time'),request)
+            listrequest=paginator.paginate_queryset(RequestForm.objects.filter(user__company=request.user.company,status='pending',user__role='E').order_by('created_time'),request)
             serlializers=ResponseSerializer(listrequest,many=True)
             return paginator.get_paginated_response(serlializers.data)
         
@@ -61,7 +61,7 @@ class EmployeeServiceCounter(ModelViewSet):
         
         elif request.method=='GET':
             paginator=PageNumberPagination()
-            paginator.page_size=8
+            paginator.page_size=1
             listrequest=paginator.paginate_queryset(RequestForm.objects.filter(user_id=request.user.id),request)
             serlializers=ResponseSerializer(listrequest,many=True)
             return paginator.get_paginated_response(serlializers.data)

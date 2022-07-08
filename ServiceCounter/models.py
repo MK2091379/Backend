@@ -6,9 +6,9 @@ from Register.models import User
 
 class RequestForm(models.Model):
     
-    pending_mode='P'
-    declined_mode='D'
-    accepted_mode='A'
+    pending_mode='pending'
+    declined_mode='declined'
+    accepted_mode='accepted'
     
     status_choice=[
         ('pending','Pending'),
