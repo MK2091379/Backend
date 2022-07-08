@@ -66,7 +66,7 @@ class User(AbstractUser):
     sexuality = models.CharField(max_length=1,choices=sexuality_choises,default="M")
     telephone = models.CharField(max_length=11,null=True)
     marita_status = models.CharField(max_length=1,choices=marital_status_choises,default="S")
-    degree_of_education = models.CharField(max_length=1,choices=degree_education_choises,default="O")
+    degree_of_education = models.CharField(max_length=1,choices=degree_of_education_choises,default="O")
     check_transportation=models.BooleanField(default=False)
     #room = models.ForeignKey('dormitory.Dormitory',on_delete=models.SET_NULL,null=True,related_name='user_room')
     #validators=[RegexValidator(regex='^0[0-9]{2,}[0-9]{7,}$')]
