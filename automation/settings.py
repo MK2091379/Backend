@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'dormitory',
     'CompanyAssets',
     'ServiceCounter',
+    'FinReport',
 
     #tools
     'django.contrib.admin',
