@@ -47,7 +47,7 @@ class EmployeeBaseSerializer(BaseUserSerializer):
                   'email','role','company','birthdate',
                   'personal_id','father_full_name','mother_full_name',
                   'address','postal_code','sexuality','telephone',
-                  'maritalـstatus','degreeـofـeducation']
+                  'marital_status','degree_of_education']
 
 
 class CompnyOwnerSerializer(serializers.ModelSerializer):
