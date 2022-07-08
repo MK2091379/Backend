@@ -8,6 +8,14 @@ from rest_framework.views import APIView
 from .models import Files, Note
 from rest_framework.decorators import action
 
+
+
+from rest_framework.pagination import PageNumberPagination
+
+
+
+
+
 class AddFileView(APIView):
     serializer_class=NoteBasic2Serializer
     def post(self, request, *args, **kwargs):
@@ -34,11 +42,15 @@ class AddFileView(APIView):
 class FileQuery(ModelViewSet):
     serializer_class=NoteDetailsSerializer
     queryset = Note.objects.all()
+    
+    pagination_class=PageNumberPagination
     @action(detail=False,methods=['GET'])
     def show_my_notes(self,request):
-        queryset=Note.objects.filter(user_id=request.user.id)
+        paginator=PageNumberPagination()
+        paginator.page_size=4
+        queryset=paginator.paginate_queryset(Note.objects.filter(user_id=request.user.id),request)
         serializer=NoteDetailsSerializer(queryset,many=True)
-        return Response(serializer.data)
+        return paginator.get_paginated_response(serializer.data)
     
     @action(detail=False, method=['DELETE'])
     def delete_file(self,request,id):

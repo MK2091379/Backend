@@ -11,18 +11,17 @@ class RequestForm(models.Model):
     accepted_mode='A'
     
     status_choice=[
-        ('P','Pending'),
-        ('D','Declined'),
-        ('A','Accepted'),
+        ('pending','Pending'),
+        ('declined','Declined'),
+        ('accepted','Accepted'),
     ]
 
     
     title_form=models.CharField(max_length=150)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    status=models.CharField(max_length=1,choices=status_choice,default=pending_mode)
+    status=models.CharField(max_length=8,choices=status_choice,default=pending_mode)
     type_form=models.CharField(max_length=150)
     value_form=models.TextField()
-    
-    created_time=models.DateTimeField(auto_now_add=True)
+    created_time=models.DateField(auto_now_add=True)
     
   

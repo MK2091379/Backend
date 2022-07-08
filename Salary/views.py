@@ -1,3 +1,4 @@
+from pickle import TRUE
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import  ModelViewSet
 from rest_framework.decorators import action
@@ -9,6 +10,9 @@ from .serializers import AddEmployeeSalarySerializer,ShowMySalarySeriializer
 from .models import EmployeeSalary
 from datetime import datetime
 # Create your views here.
+
+from rest_framework.pagination import PageNumberPagination
+
 
 
 
@@ -32,6 +36,33 @@ class AdminSalaryAPI(ModelViewSet):
          serializer.is_valid(raise_exception=True)
          serializer.save()
          return Response(status=status.HTTP_200_OK)
+class AdminSalaryAPI(ModelViewSet):
+    serializer_class=AddEmployeeSalarySerializer
+    queryset=EmployeeSalary.objects.all()
+    pagination_class=PageNumberPagination
+    
+    @action(detail=False,methods=['PATCH'])
+    def add_salary_for_employee(self,request,id):
+   
+         getsalaryuser=get_object_or_404(EmployeeSalary,user_id=id)
+         serializer=AddEmployeeSalarySerializer(getsalaryuser,data=request.data)
+         serializer.is_valid(raise_exception=True)
+         serializer.save()
+         return Response(status=status.HTTP_200_OK)
+     
+    @action(detail=False,methods=['GET'])
+    def get_my_employee_salary(self,request):
+        pagiantor=PageNumberPagination()
+        pagiantor.page_size=10
+        getsalaryuser=pagiantor.paginate_queryset(EmployeeSalary.objects.filter(
+            employee__company=request.user.company),request)
+        if getsalaryuser.exists():
+            serializer=AddEmployeeSalarySerializer(getsalaryuser,many=True)
+            return pagiantor.get_paginated_response(serializer.data)
+        else:
+             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+
          
 
 class EomplyeeShowSalary(ModelViewSet):
@@ -63,8 +94,8 @@ class EomplyeeShowSalary(ModelViewSet):
        getsalary=get_object_or_404(EmployeeSalary,employee_id=request.user.id)
        serializer=ShowMySalarySeriializer(getsalary,many=False)
        new_serializer={ 
-                       "salary":serializer.data["monthly_salary"],
-                       "min_time":serializer.data["monthly_salary"],
+                       "monthly_salary":serializer.data["monthly_salary"],
+                       "min_time":serializer.data["min_working"],
                        "health_insurance":100,
                        "total_time":total_hour,
                        "dormitory":0.0,
