@@ -15,23 +15,8 @@ class HRDeskViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = HRdeskSerializer
     @action(detail=False, methods=['GET'])
-    def get_master_employee(self, request):
+    def get_employee(self, request):
         if request.method == 'GET':
-            tracker = User.objects.filter(degreeـofـeducation = 'M')
-            serializer = HRdeskSerializer(tracker,many=True)
-            return Response(serializer.data)
-    def get_becholar_employee(self, request):
-        if request.method == 'GET':
-            tracker = User.objects.filter(degreeـofـeducation = 'B')
-            serializer = HRdeskSerializer(tracker,many=True)
-            return Response(serializer.data)
-    def get_diploma_employee(self, request):
-        if request.method == 'GET':
-            tracker = User.objects.filter(degreeـofـeducation = 'D')
-            serializer = HRdeskSerializer(tracker,many=True)
-            return Response(serializer.data)
-    def get_other_employee(self, request):
-        if request.method == 'GET':
-            tracker = User.objects.filter(degreeـofـeducation = 'O')
+            tracker = User.objects.filter(role = 'E',company = request.user.company)
             serializer = HRdeskSerializer(tracker,many=True)
             return Response(serializer.data)

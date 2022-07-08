@@ -39,11 +39,15 @@ INSTALLED_APPS = [
     'Register',
     'TimeAndDateTracker',
     'ToDoList',
-    'ServiceCounter',
+    'Transportation',
     'HRdesk',
     'BulletinBoard',
+    'Salary',
     'Notepad',
     'Food',
+    'dormitory',
+    'CompanyAssets',
+    'ServiceCounter',
 
     #tools
     'django.contrib.admin',
@@ -52,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     #debug tools
     'debug_toolbar',
 
@@ -71,15 +76,15 @@ INSTALLED_APPS = [
 
     #map
     'location_field.apps.DefaultConfig'
-    
 
-    
- 
-    
+
+
 
 
 
 ]
+
+
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -243,7 +248,5 @@ LOCATION_FIELD = {
     'provider.openstreetmap.max_zoom': 18,
 }
 
-
-        
 
 

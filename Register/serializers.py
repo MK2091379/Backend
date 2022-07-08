@@ -9,6 +9,8 @@ class GetRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=['role']
+        
+        
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model=Company
@@ -22,7 +24,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields=['first_name','last_name','username','email','company','role','password']
     
     def create(self, validated_data):
-        user = User.objects.create(
+        user = User(
            
             
             first_name=validated_data['first_name'],
@@ -36,6 +38,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         
         user.set_password(validated_data['password'])
         user.save()
+        user.add_salary()
         return user
         
 
@@ -87,3 +90,5 @@ class CompanyGetSerializer(serializers.ModelSerializer):
         class Meta:
             model=Company
             fields=['company_name']
+            
+
