@@ -20,7 +20,7 @@ class EditReportSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=Report
-        fields=['admin','name''amount','date_period']
+        fields=['admin','name','amount','date_period']
         read_only_fields=['admin']
         
         def validate(self, attrs):
