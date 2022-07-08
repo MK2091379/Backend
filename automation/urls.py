@@ -74,6 +74,8 @@ urlpatterns = [
     path('notepad/',include('Notepad.urls')),
     #ServiceCounter
     path('servicecounter/',include('ServiceCounter.urls')),
+    #FinReport
+    path('FinReport/',include('FinReport.urls')),
 ]
 
 
