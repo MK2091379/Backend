@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
-from Salary.models import EmployeeSalary
+from Salary.models import EmployeeSalary 
 from django.db import models
 
 
@@ -12,8 +12,8 @@ class Company(models.Model):
 
     company_name=models.CharField(max_length=255,primary_key=True)
     company_biography=models.TextField()
-
-
+    
+    
     def __str__(self) :
         return self.company_name
 
@@ -26,31 +26,29 @@ class User(AbstractUser):
         (ROLE_COMPANY_OWNER,'Company Owner'),
         (ROLE_EMPLOYEE,'Employee'),
     ]
-
+    
     sexuality_choises = [
         ("M","Male",),
         ("F","Female",),
         ("O","Other",)
     ]
-
-    marital_status_choises = [
+    maritalـstatus_choises = [
         ("M","Maried",),
         ("S","Single",)
     ]
-
-    degree_of_education_choises = [
+    degreeـofـeducationـchoises = [
         ("D","Diploma",),
         ("B","Bachelor",),
         ("M","Master",),
         ("O","Other")
     ]
-
-
-
-
-    #regex for phone iranian phone number
+    
+    
+    
+    
+    #regex for phone iranian phone number 
     valid_number=[RegexValidator(regex='09(0[1-2])|(1[0-9])|(3[0-9])|(2[0-1])-?[0-9]{3}-?[0-9]{4}')]
-
+    
     first_name=models.CharField(_('first name'),max_length=60)
     last_name=models.CharField(_('last name'),max_length=60)
     email=models.EmailField(_('email address'), unique=True)
@@ -65,29 +63,30 @@ class User(AbstractUser):
     postal_code = models.CharField(max_length=10,validators=[RegexValidator(regex='^[0-9]{10}')],null=True)
     sexuality = models.CharField(max_length=1,choices=sexuality_choises,default="M")
     telephone = models.CharField(max_length=11,null=True)
-    marital_status = models.CharField(max_length=1,choices=marital_status_choises,default="S")
-    degree_of_education = models.CharField(max_length=1,choices=degree_of_education_choises,default="O")
+    maritalـstatus = models.CharField(max_length=1,choices=maritalـstatus_choises,default="S")
+    degreeـofـeducation = models.CharField(max_length=1,choices=degreeـofـeducationـchoises,default="O")
     check_transportation=models.BooleanField(default=False)
     #room = models.ForeignKey('dormitory.Dormitory',on_delete=models.SET_NULL,null=True,related_name='user_room')
     #validators=[RegexValidator(regex='^0[0-9]{2,}[0-9]{7,}$')]
-
-
+  
+    
     def add_salary(self):
-
+        
             add_obj_salary=EmployeeSalary(employee_id=self.pk,monthly_salary=0.0,reward_benefit=0.0,min_working=0.0)
             add_obj_salary.save()
+          
+            
+        
 
+    
 
+    
+    
 
-
-
-
-
-
-
-
-
+    
+    
     def __str__(self) :
         return self.email+" "+self.first_name+" "+self.last_name
     class Meta :
         ordering=['last_name']
+    
