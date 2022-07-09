@@ -10,7 +10,7 @@ class AddReportSerializer(serializers.ModelSerializer):
     class Meta:
         model=Report
         fields=['id','admin','name','type_report','amount','period','date_period']
-        editead_only_fields=['id','admin']
+        read_only_fields=['id','admin']
     def validate(self, attrs):
         if attrs['type_report']=='expense':
             attrs['amount']=(-1)*  attrs['amount']
@@ -27,3 +27,9 @@ class EditReportSerializer(serializers.ModelSerializer):
             if attrs['type_report']=='expense':
                 attrs['amount']=(-1)*  attrs['amount']
             return attrs
+        
+class MinInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Report
+        fields=['name','amount']
+        read_only_fields=['name','amount']

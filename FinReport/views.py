@@ -22,7 +22,7 @@ class ReportDetail(ModelViewSet):
     
     @action(detail=False,methods=['POST'])
     def post_report(self,request):
-        new_report=Report(admin_id=self.user.id)
+        new_report=Report(admin_id=request.user.id)
         serializer=AddReportSerializer(new_report,data=request.data)
         serializer.is_valid(raise_exception=True)
         new_report.save()
@@ -33,7 +33,7 @@ class ReportDetail(ModelViewSet):
     def get_report(self,request):
         paginator=PageNumberPagination()
         paginator.page_size=10
-        listreport=paginator.paginate_queryset(Report.objects.filter(admin_id=request.user.id))
+        listreport=paginator.paginate_queryset(Report.objects.filter(admin_id=request.user.id),request)
         serializer=AddReportSerializer(listreport,many=True)
         return paginator.get_paginated_response(serializer.data)
 

@@ -1,5 +1,7 @@
+from datetime import datetime
 from django.db import models
 from django.forms import DateField
+from pytz import timezone
 from Register.models import User
 
 
@@ -23,10 +25,10 @@ class Report(models.Model):
     admin=models.ForeignKey(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=200)
     type_report=models.CharField(max_length=7,choices=type_report_choices,default='expense')
-    amount=models.DecimalField(max_digits=6,decimal_places=2)
+    amount=models.DecimalField(max_digits=6,decimal_places=2,default=0)
     period=models.CharField(max_length=9,choices=period_choices,default='daily')
     created_time=models.DateField(auto_now_add=True)
-    date_period=models.DateField()
+    date_period=models.DateField(default=datetime.now())
     
     
     
