@@ -1,23 +1,18 @@
-from unicodedata import name
-from django.shortcuts import render
-from pkg_resources import declare_namespace
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from urllib import request, response
-from Register.models import Company,User
-from .models import Food
-from .serializers import FoodSerializer
 from rest_framework.decorators import api_view,action
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
+from Register.models import Company,User
+from .models import Food
+from .serializers import FoodSerializer
+from automation.permissions import IsCompanyOwner,IsEmployee
 
 
 
 class FoodViewSetManager(ModelViewSet):
-    #user,name,date,amount,company
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,IsCompanyOwner]
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
     @action(detail=False, methods=['GET'])
@@ -64,7 +59,7 @@ class FoodViewSetManager(ModelViewSet):
             return Response("OK")
 class FoodViewSetEmployee(ModelViewSet):
     #user,name,date,amount,company
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,IsEmployee]
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
     @action(detail=False, methods=['GET'])

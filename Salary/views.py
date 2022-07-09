@@ -1,17 +1,19 @@
-from pickle import TRUE
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import  ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from Transportation.models import AdminTransportation
 from TimeAndDateTracker.models import TimeAndDateTracker
 from .serializers import AddEmployeeSalarySerializer,ShowMySalarySeriializer
 from .models import EmployeeSalary
 from datetime import datetime
+from automation.permissions import IsCompanyOwner,IsEmployee
+
 # Create your views here.
 
-from rest_framework.pagination import PageNumberPagination
 
 
 
@@ -19,7 +21,8 @@ from rest_framework.pagination import PageNumberPagination
 class AdminSalaryAPI(ModelViewSet):
     serializer_class=AddEmployeeSalarySerializer
     queryset=EmployeeSalary.objects.all()
-    
+    permission_classes=[IsAuthenticated,IsCompanyOwner]
+
     
     @action(detail=False,methods=['PATCH'])
     def add_salary_for_employee(self,request,id):
@@ -40,6 +43,8 @@ class AdminSalaryAPI(ModelViewSet):
     serializer_class=AddEmployeeSalarySerializer
     queryset=EmployeeSalary.objects.all()
     pagination_class=PageNumberPagination
+    permission_classes=[IsAuthenticated,IsCompanyOwner]
+
     
     @action(detail=False,methods=['PATCH'])
     def add_salary_for_employee(self,request,id):
@@ -67,6 +72,8 @@ class EomplyeeShowSalary(ModelViewSet):
     
     serializer_class=ShowMySalarySeriializer
     queryset=EmployeeSalary.objects.all()
+    permission_classes=[IsAuthenticated,IsEmployee]
+
     action(detail=False,methods=['GET'])
     def show_my_salary(self , request):
        total_hour=0

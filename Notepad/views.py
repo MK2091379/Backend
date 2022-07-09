@@ -2,15 +2,15 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import NoteBasicSerializer,NoteFileSerializer,NoteDetailsSerializer,NoteBasic2Serializer
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.views import APIView
-from .models import Files, Note
-from rest_framework.decorators import action
-
-
-
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
+from rest_framework.views import APIView
+from .serializers import NoteBasicSerializer,NoteFileSerializer,NoteDetailsSerializer,NoteBasic2Serializer
+from .models import Files, Note
+
+
+
 
 
 
