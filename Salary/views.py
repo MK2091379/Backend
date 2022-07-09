@@ -56,11 +56,9 @@ class AdminSalaryAPI(ModelViewSet):
         pagiantor.page_size=10
         getsalaryuser=pagiantor.paginate_queryset(EmployeeSalary.objects.filter(
             employee__company=request.user.company),request)
-        if getsalaryuser.exists():
-            serializer=AddEmployeeSalarySerializer(getsalaryuser,many=True)
-            return pagiantor.get_paginated_response(serializer.data)
-        else:
-             return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer=AddEmployeeSalarySerializer(getsalaryuser,many=True)
+        return pagiantor.get_paginated_response(serializer.data)
+        
         
 
          
