@@ -1,18 +1,15 @@
-from ast import Return
-from crypt import methods
-from urllib import response
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
-from automation.permissions import IsCompanyOwner 
-from rest_framework.pagination import PageNumberPagination
-from .serializers import AddReportSerializer,EditReportSerializer,MinInfoSerializer
-from rest_framework.response import Response
 from rest_framework import status
-from FinReport.models import Report
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from automation.permissions import IsCompanyOwner 
+from .serializers import AddReportSerializer,EditReportSerializer,MinInfoSerializer
 from .serializers import AddReportSerializer,EditReportSerializer
-from django.shortcuts import get_object_or_404
+from FinReport.models import Report
 
 # Create your views here.
 class ReportDetail(ModelViewSet):
@@ -59,7 +56,7 @@ class ActionReport(ModelViewSet):
         
         elif request.method=='DELETE':
             get_report.delete()
-            return response(status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
 
 
 class ChartReport(ModelViewSet):
@@ -70,8 +67,8 @@ class ChartReport(ModelViewSet):
     
     
     @action (detail=False,methods=['GET'])
-    def get_limited_info(self,request,date1,date2):
-     Listmininforeport=Report.objects.filter(date_period__gt=date1,date_period__lt=date2,admin_id=request.user.id)
+    def get_limited_info(self,request,Sdate,Edate):
+     Listmininforeport=Report.objects.filter(date_period__gt=Sdate,date_period__lt=Edate,admin_id=request.user.id)
      serializer=MinInfoSerializer(Listmininforeport,many=True)
      return  Response(serializer.data,status=status.HTTP_200_OK)
      
