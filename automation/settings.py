@@ -45,7 +45,10 @@ INSTALLED_APPS = [
     'Salary',
     'Notepad',
     'Food',
+    'dormitory',
+    'CompanyAssets',
     'ServiceCounter',
+    'FinReport',
 
     #tools
     'django.contrib.admin',
@@ -54,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     #debug tools
     'debug_toolbar',
 
@@ -74,8 +78,12 @@ INSTALLED_APPS = [
     #map
     'location_field.apps.DefaultConfig'
 
-]
 
+
+
+
+
+]
 
 
 
@@ -240,3 +248,6 @@ LOCATION_FIELD = {
     'search.provider': 'nominatim',
     'provider.openstreetmap.max_zoom': 18,
 }
+
+
+

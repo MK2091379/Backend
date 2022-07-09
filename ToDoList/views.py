@@ -10,6 +10,10 @@ from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
+from rest_framework.pagination import PageNumberPagination 
+
+
+
 
 
 # Create your views here.
@@ -17,12 +21,17 @@ from rest_framework.permissions import IsAuthenticated
 class ToDoListViewSet(ModelViewSet):
      permission_classes = [IsAuthenticated]
      serializer_class=TaskSerializer
+     pagination_class=PageNumberPagination
      @action(detail=False,methods=['GET','POST'])    
      def todo_view_list(self,request):
          if request.method=='GET':
-               queryset = Task.objects.filter(user_id=request.user.id).order_by('priority')
+               paginator=PageNumberPagination()
+               paginator.page_size=10
+               queryset = paginator.paginate_queryset(
+                     Task.objects.filter(user_id=request.user.id).order_by('priority'),
+                                                      request)
                serializer = TaskSerializer(queryset,many=True)
-               return Response(serializer.data)
+               return paginator.get_paginated_response(serializer.data)
          elif request.method=='POST':
                task = Task.objects.create(user_id=request.user.id)
                serializer = TaskSerializer(task, data=request.data)
@@ -33,6 +42,7 @@ class TaskUpdatingSet(ModelViewSet):
       
     serializer_class=TaskSerializer
     permission_classes = [IsAuthenticated]
+    
 
     @action(detail=False, methods=['PUT','DELETE'])
     def taskupdate (self, request,id1):

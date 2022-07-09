@@ -11,6 +11,9 @@ from .models import EmployeeSalary
 from datetime import datetime
 # Create your views here.
 
+from rest_framework.pagination import PageNumberPagination
+
+
 
 
 class AdminSalaryAPI(ModelViewSet):
@@ -36,7 +39,7 @@ class AdminSalaryAPI(ModelViewSet):
 class AdminSalaryAPI(ModelViewSet):
     serializer_class=AddEmployeeSalarySerializer
     queryset=EmployeeSalary.objects.all()
-    
+    pagination_class=PageNumberPagination
     
     @action(detail=False,methods=['PATCH'])
     def add_salary_for_employee(self,request,id):
@@ -49,13 +52,13 @@ class AdminSalaryAPI(ModelViewSet):
      
     @action(detail=False,methods=['GET'])
     def get_my_employee_salary(self,request):
-   
-        getsalaryuser=EmployeeSalary.objects.filter(employee__company=request.user.company)
-        if getsalaryuser.exists():
-            serializer=AddEmployeeSalarySerializer(getsalaryuser,many=True)
-            return Response(serializer.data)
-        else:
-             return Response(status=status.HTTP_404_NOT_FOUND)
+        pagiantor=PageNumberPagination()
+        pagiantor.page_size=10
+        getsalaryuser=pagiantor.paginate_queryset(EmployeeSalary.objects.filter(
+            employee__company=request.user.company),request)
+        serializer=AddEmployeeSalarySerializer(getsalaryuser,many=True)
+        return pagiantor.get_paginated_response(serializer.data)
+        
         
 
          
