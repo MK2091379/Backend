@@ -1,23 +1,19 @@
-from unicodedata import name
-from django.shortcuts import render
-from pkg_resources import declare_namespace
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from urllib import request, response
-from Register.models import Company
-from .models import Dormitory
-from .serializers import DormitorySerializer
 from rest_framework.decorators import api_view,action
 from rest_framework.response import Response
-from rest_framework import generics
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from Register.models import Company
+from .models import Dormitory
+from .serializers import DormitorySerializer
+from automation.permissions import IsEmployee,IsCompanyOwner
 
 
 
 class DormitoryViewSetManager(ModelViewSet):
     #user,name,date,amount,company
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,IsCompanyOwner]
     queryset = Dormitory.objects.all()
     serializer_class = DormitorySerializer
     @action(detail=False, methods=['GET'])
@@ -72,7 +68,7 @@ class DormitoryViewSetManager(ModelViewSet):
             return Response("OK")
 class DormitoryViewSetEmployee(ModelViewSet):
     #user,name,date,amount,company
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,IsEmployee]
     queryset = Dormitory.objects.all()
     serializer_class = DormitorySerializer
     @action(detail=False, methods=['GET'])

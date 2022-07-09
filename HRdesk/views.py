@@ -1,17 +1,16 @@
-from django.shortcuts import render
+from rest_framework.decorators import api_view,action
+from rest_framework.response import Response
+from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from urllib import request, response
 from Register.models import User
 from .serializers import HRdeskSerializer
-from rest_framework.decorators import api_view,action
-from rest_framework.response import Response
-from rest_framework import generics
-from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from automation.permissions import IsEmployee,IsCompanyOwner
 
 class HRDeskViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,IsCompanyOwner]
     queryset = User.objects.all()
     serializer_class = HRdeskSerializer
     @action(detail=False, methods=['GET'])

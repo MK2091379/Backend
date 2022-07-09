@@ -1,4 +1,3 @@
-from dataclasses import fields
 from rest_framework import serializers
 from Register.models import Company,User
 from .models import Dormitory

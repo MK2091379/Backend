@@ -1,20 +1,17 @@
 from django.shortcuts import get_object_or_404
-from Register.models import User
-from automation import pagination
-from .models import AdminTransportation
-from .serializers import AdminTransportationSerializer, EmployeeGetSerializer, UserTransportationSerializer
 from rest_framework import status
-from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
-from automation.permissions import IsCompanyOwner, IsEmployee
-
+from rest_framework.viewsets import ModelViewSet
 from Transportation import serializers
+from Register.models import User
+from automation.permissions import IsCompanyOwner, IsEmployee
+from .serializers import AdminTransportationSerializer, EmployeeGetSerializer, UserTransportationSerializer
+from .models import AdminTransportation
+from automation.permissions import IsEmployee,IsCompanyOwner
 
-
-from  rest_framework.pagination import PageNumberPagination
 
 
 
@@ -70,7 +67,7 @@ class ServiceUpdatingSet(ModelViewSet):
 
 class EmployeeReserve(ModelViewSet):
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,IsEmployee]
     queryset = AdminTransportation.objects.all()
     serializer_class = EmployeeGetSerializer
     pagination_class=PageNumberPagination
@@ -109,7 +106,7 @@ class EmployeeReserve(ModelViewSet):
     
 class ShowServicesApi(ModelViewSet):
        serializer_class=UserTransportationSerializer
-       permission_classes = [IsAuthenticated]
+       permission_classes = [IsAuthenticated,IsEmployee]
        @action(detail=False,methods=['GET'])   
        def myservice_view(self,request):
          if request.method=='GET':

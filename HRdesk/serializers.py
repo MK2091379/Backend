@@ -1,6 +1,5 @@
-from dataclasses import field
-from pyexpat import model
 from rest_framework import serializers
+from pyexpat import model
 from Register.models import User,Company
 from djoser.serializers import UserSerializer as BaseUserSerializer
 

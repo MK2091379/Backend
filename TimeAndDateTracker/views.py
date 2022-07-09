@@ -1,9 +1,4 @@
 from django.shortcuts import render
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from urllib import request, response
-from TimeAndDateTracker.apps import TimeanddatetrackerConfig
-from .models import TimeAndDateTracker
-from .serializers import TimeAndDateTrackerSerializer,TimeAndDateTrackerUpdatingSerializer
 from rest_framework.decorators import api_view,action
 from rest_framework.response import Response
 from rest_framework import generics
@@ -11,6 +6,11 @@ from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveM
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from urllib import request, response
+from TimeAndDateTracker.apps import TimeanddatetrackerConfig
+from .models import TimeAndDateTracker
+from .serializers import TimeAndDateTrackerSerializer,TimeAndDateTrackerUpdatingSerializer
 
 
 

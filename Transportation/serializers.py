@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import AdminTransportation
 from Register.models import User
 from Register.serializers import EmployeeSerializer
+from .models import AdminTransportation
 
 
 class AdminTransportationSerializer(serializers.ModelSerializer):  

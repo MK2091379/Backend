@@ -1,13 +1,15 @@
 
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet 
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
 from ServiceCounter.serializers import *
 from .models import *
+from automation.permissions import IsCompanyOwner,IsEmployee
+
 
 
 
@@ -18,6 +20,7 @@ class AdminServiceCounter(ModelViewSet):
     serializer_class=ResponseSerializer
     queryset=RequestForm.objects.all()
     pagination_class=PageNumberPagination
+    permission_classes=[IsAuthenticated,IsCompanyOwner]
     
     
     action(detail=False ,methods=['GET'])
@@ -45,6 +48,8 @@ class EmployeeServiceCounter(ModelViewSet):
     
     queryset=RequestForm.objects.all()
     pagination_class=PageNumberPagination
+    permission_classes=[IsAuthenticated,IsEmployee]
+
     
     
     
