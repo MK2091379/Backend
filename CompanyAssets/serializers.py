@@ -7,3 +7,4 @@ class CompanyAssetsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyAssets
         fields = ['user','id', 'name','description','number']
+        read_only_fields = ['user']
