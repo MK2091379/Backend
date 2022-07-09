@@ -1,3 +1,5 @@
+from ast import Return
+from crypt import methods
 from urllib import response
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
@@ -5,7 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from automation.permissions import IsCompanyOwner 
 from rest_framework.pagination import PageNumberPagination
-from .serializers import AddReportSerializer,EditReportSerializer
+from .serializers import AddReportSerializer,EditReportSerializer,MinInfoSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from FinReport.models import Report
@@ -58,6 +60,23 @@ class ActionReport(ModelViewSet):
         elif request.method=='DELETE':
             get_report.delete()
             return response(status=status.HTTP_200_OK)
+
+
+class ChartReport(ModelViewSet):
+    
+    serializer_class=MinInfoSerializer
+    queryset=Report.objects.all()
+    permission_classes=[IsAuthenticated,IsCompanyOwner]
+    
+    
+    @action (detail=False,methods=['GET'])
+    def get_limited_info(self,request,date1,date2):
+     Listmininforeport=Report.objects.filter(date_period__gt=date1,date_period__lt=date2,admin_id=request.user.id)
+     serializer=MinInfoSerializer(Listmininforeport,many=True)
+     return  Response(serializer.data,status=status.HTTP_200_OK)
+     
+     
+     
         
         
             
