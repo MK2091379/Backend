@@ -47,7 +47,7 @@ class ActionReport(ModelViewSet):
     @action(detail=False,methods=['PATCH','DELETE'])
     def edit_delete_form(self,request,id):
         
-        get_report=get_object_or_404(Report,pk=id,admin_id=self.request.id)
+        get_report=get_object_or_404(Report,pk=id,admin_id=self.request.user.id)
         if request.method=='PATCH':
             serializer=EditReportSerializer(get_report,data=request.data)
             serializer.is_valid(raise_exception=True)
